@@ -14,191 +14,12 @@
     <link
         href="https://fonts.googleapis.com/css2?family=IM+Fell+Double+Pica:ital@0;1&family=IM+Fell+English:ital@0;1&display=swap"
         rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 
     <style>
         /* ==========================================================
-           GAZETTE DE LA SERRE — INTERACTIVE HUB
-           Esthétique : Second Empire × Modern Web, circa 1869
+           GAZETTE DE LA SERRE — INDEX SPECIFIC
         ========================================================== */
-
-        *,
-        *::before,
-        *::after {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --bg-dark: #0e0a04;
-            --bg-wood: #1a120a;
-            --bg-panel: #151009;
-            --parchment: #ede0c0;
-            --parchment-alt: #e4d4ae;
-            --parchment-light: #f5ecd6;
-            --ink: #160e04;
-            --ink-light: #3a2e1e;
-            --ink-faded: #6b5a42;
-            --red-ink: #7a2e2e;
-            --red-glow: #a04040;
-            --gold: #b8942e;
-            --gold-dim: #8b7232;
-            --gold-bright: #d4aa3c;
-            --rule: #5a4a32;
-            --rule-light: #3a2e1e;
-            --shadow: rgba(0, 0, 0, .5);
-
-            --font-display: 'IM Fell Double Pica', 'Georgia', serif;
-            --font-body: 'IM Fell English', 'Georgia', serif;
-
-            --nav-height: 64px;
-            --transition: .3s ease;
-        }
-
-        html {
-            font-size: 17px;
-            scroll-behavior: smooth;
-            scroll-padding-top: calc(var(--nav-height) + 1rem);
-        }
-
-        body {
-            font-family: var(--font-body);
-            background-color: var(--bg-dark);
-            color: var(--parchment);
-            line-height: 1.7;
-            min-height: 100vh;
-        }
-
-        /* ==========================================================
-           NAVBAR — BARRE DE NAVIGATION
-        ========================================================== */
-        .navbar {
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            height: var(--nav-height);
-            padding: 0 2rem;
-            background: linear-gradient(180deg, #12090380, #0e0a04f0 60%);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--rule);
-        }
-
-        .navbar-logo {
-            font-family: var(--font-display);
-            font-size: 1.25rem;
-            letter-spacing: .08em;
-            color: var(--gold);
-            text-decoration: none;
-            transition: color var(--transition);
-            white-space: nowrap;
-        }
-
-        .navbar-logo:hover,
-        .navbar-logo:focus-visible {
-            color: var(--gold-bright);
-        }
-
-        .navbar-links {
-            display: flex;
-            align-items: center;
-            gap: 0.2rem;
-            list-style: none;
-        }
-
-        .nav-link {
-            position: relative;
-            font-family: var(--font-body);
-            font-size: 0.82rem;
-            letter-spacing: .12em;
-            text-transform: uppercase;
-            color: var(--parchment-alt);
-            text-decoration: none;
-            padding: 0.5rem 1rem;
-            transition: color var(--transition);
-            cursor: pointer;
-        }
-
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            bottom: 2px;
-            left: 50%;
-            width: 0;
-            height: 1px;
-            background: var(--red-ink);
-            transition: width var(--transition), left var(--transition);
-        }
-
-        .nav-link:hover,
-        .nav-link:focus-visible {
-            color: var(--red-glow);
-        }
-
-        .nav-link:hover::after,
-        .nav-link:focus-visible::after {
-            width: 70%;
-            left: 15%;
-        }
-
-        .nav-link.active {
-            color: var(--gold);
-        }
-
-        .nav-link.active::after {
-            width: 70%;
-            left: 15%;
-            background: var(--gold-dim);
-        }
-
-        /* --- Bouton S'abonner --- */
-        .btn-subscribe {
-            font-family: var(--font-body);
-            font-size: 0.75rem;
-            letter-spacing: .1em;
-            text-transform: uppercase;
-            color: var(--bg-dark);
-            background: linear-gradient(135deg, var(--gold), var(--gold-dim));
-            border: 1px solid var(--gold-dim);
-            padding: 0.45rem 1.2rem;
-            margin-left: 1rem;
-            cursor: pointer;
-            transition: all var(--transition);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .btn-subscribe::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, var(--gold-bright), var(--gold));
-            opacity: 0;
-            transition: opacity var(--transition);
-        }
-
-        .btn-subscribe span {
-            position: relative;
-            z-index: 1;
-        }
-
-        .btn-subscribe:hover,
-        .btn-subscribe:focus-visible {
-            transform: translateY(-1px);
-            box-shadow: 0 4px 16px rgba(184, 148, 46, .35);
-        }
-
-        .btn-subscribe:hover::before {
-            opacity: 1;
-        }
-
-        .btn-subscribe:active {
-            transform: translateY(1px);
-            box-shadow: 0 1px 4px rgba(184, 148, 46, .2);
-        }
 
         /* --- Hamburger (mobile) --- */
         .navbar-toggle {
@@ -217,6 +38,35 @@
             height: 2px;
             background: var(--parchment);
             transition: all var(--transition);
+        }
+
+        /* ==========================================================
+           SUBSCRIBE BUTTON
+        ========================================================== */
+        .btn-subscribe {
+            font-family: var(--font-body);
+            font-size: .75rem;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            background: linear-gradient(135deg, var(--red-ink), var(--red-stamp));
+            color: var(--parchment-light);
+            border: 1px solid var(--red-glow);
+            padding: .5rem 1.2rem;
+            cursor: pointer;
+            transition: all var(--transition);
+            margin-left: 1rem;
+            box-shadow: 0 4px 15px rgba(138, 48, 48, .3);
+        }
+
+        .btn-subscribe:hover {
+            background: var(--red-glow);
+            border-color: var(--parchment);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(138, 48, 48, .5);
+        }
+
+        .btn-subscribe:active {
+            transform: translateY(0);
         }
 
         /* ==========================================================
@@ -788,14 +638,27 @@
             transform: translateX(4px);
         }
 
-        /* ==========================================================
-           FOOTER
-        ========================================================== */
-        .footer {
-            text-align: center;
-            padding: 3rem 2rem 2rem;
-            border-top: 1px solid var(--rule-light);
-            margin-top: 2rem;
+        @media(max-width:768px) {
+            .navbar-toggle {
+                display: flex;
+            }
+
+            .hero-title {
+                font-size: 3rem;
+            }
+
+            .section {
+                padding: 3rem 1.5rem;
+            }
+
+            .editorial-panel {
+                padding: 2rem 1.5rem;
+            }
+
+            .staff-card.featured {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
         }
 
         .footer-quote {
@@ -827,8 +690,8 @@
         }
 
         /* ==========================================================
-           ANIMATIONS
-        ========================================================== */
+    ANIMATIONS
+    ========================================================== */
         @keyframes fadeDown {
             from {
                 opacity: 0;
@@ -890,8 +753,8 @@
         }
 
         /* ==========================================================
-           SUBSCRIBE MODAL (Overlay)
-        ========================================================== */
+    SUBSCRIBE MODAL (Overlay)
+    ========================================================== */
         .modal-overlay {
             position: fixed;
             inset: 0;
@@ -985,8 +848,8 @@
         }
 
         /* ==========================================================
-           RESPONSIVE
-        ========================================================== */
+    RESPONSIVE
+    ========================================================== */
         @media (max-width: 768px) {
             .navbar {
                 padding: 0 1.2rem;
@@ -1063,7 +926,7 @@
     </style>
 </head>
 
-<body>
+<body class="bg-main">
 
     <!-- ==============================================================
          NAVBAR
@@ -1080,7 +943,8 @@
         <ul class="navbar-links" id="nav-links">
             <li><a href="#hero" class="nav-link active" id="link-accueil">Accueil</a></li>
             <li><a href="#les-editions" class="nav-link" id="link-editions">Les Éditions</a></li>
-            <li><a href="#archives" class="nav-link" id="link-archives">Archives Clandestines</a></li>
+            <li><a href="petites-annonces.html" class="nav-link" id="link-annonces">Annonces</a></li>
+            <li><a href="avis-de-recherche.html" class="nav-link" id="link-avis">Avis de Recherche</a></li>
             <li><a href="#redaction" class="nav-link" id="link-staff">La Machinerie</a></li>
             <li>
                 <button class="btn-subscribe" id="btn-subscribe" type="button">
@@ -1125,11 +989,25 @@
                     <div class="quick-link-sub">Le numéro le plus récent de la Gazette</div>
                 </div>
             </a>
-            <a href="#les-editions" class="quick-link" id="ql-editions">
-                <div class="quick-link-icon">❧</div>
+            <a href="petites-annonces.html" class="quick-link" id="ql-annonces">
+                <div class="quick-link-icon">📜</div>
                 <div>
-                    <div class="quick-link-label">Les Éditions</div>
-                    <div class="quick-link-sub">Tous les numéros publiés à ce jour</div>
+                    <div class="quick-link-label">Petites Annonces</div>
+                    <div class="quick-link-sub">Offres, demandes et avis divers</div>
+                </div>
+            </a>
+            <a href="avis-de-recherche.html" class="quick-link" id="ql-avis">
+                <div class="quick-link-icon">🔍</div>
+                <div>
+                    <div class="quick-link-label">Avis de Recherche</div>
+                    <div class="quick-link-sub">Individus recherchés par les autorités</div>
+                </div>
+            </a>
+            <a href="lettres.html" class="quick-link" id="ql-lettres">
+                <div class="quick-link-icon">✉</div>
+                <div>
+                    <div class="quick-link-label">Écrire à la Rédaction</div>
+                    <div class="quick-link-sub">Adressez une lettre à nos rédacteurs</div>
                 </div>
             </a>
             <a href="#" class="quick-link" id="ql-archives" aria-label="Archives Clandestines">
@@ -1164,7 +1042,7 @@
             <!-- ÉDITION N°1 -->
             <a href="editions/edition-1.html" class="edition-card" id="edition-1" tabindex="0">
                 <div class="edition-card-img">
-                    <img src="page_de_garde.jpg" alt="Page de garde — N° 824, 2 Mars 1869" loading="lazy">
+                    <img src="page-de-garde.jpg" alt="Page de garde — N° 824, 2 Mars 1869" loading="lazy">
                     <span class="edition-badge">Nouveau</span>
                 </div>
                 <div class="edition-card-body">
@@ -1172,7 +1050,8 @@
                     <p class="edition-card-date">2 Mars 1869 — N° 824</p>
                     <p class="edition-card-summary">
                         Le diacre Gérard Lacroix, blessé d'une balle républicaine devant Saint-Sulpice, prononce une
-                        parole qui traverse Paris entier. Enquête, témoignages et éditorial — le premier numéro de la
+                        parole qui traverse Paris entier. Enquête, témoignages et éditorial — le premier numéro de
+                        la
                         Gazette.
                     </p>
                     <span class="btn-read">Lire l'édition <span class="arrow">→</span></span>
@@ -1195,17 +1074,23 @@
         <article class="editorial-panel">
             <p class="editorial-label">De l'exigence d'impartialité en notre temps</p>
 
-            <p class="editorial-text drop-cap">La Gazette de la Serre est un journal parisien indépendant, fondé sur un
-                principe simple mais exigeant&nbsp;, informer impartialement. Détachée de toute mouvance partisane, elle
+            <p class="editorial-text drop-cap">La Gazette de la Serre est un journal parisien indépendant, fondé sur
+                un
+                principe simple mais exigeant&nbsp;, informer impartialement. Détachée de toute mouvance partisane,
+                elle
                 ne revendique ni allégeance politique, ni engagement idéologique. Sa ligne éditoriale repose sur la
                 rigueur, la vérification des faits et l'exigence d'équilibre.</p>
 
-            <p class="editorial-text">La Gazette s'attache à offrir à ses lecteurs une vision précise et impartiale des
-                réalités&nbsp;, Diplomatiques, Politiques, Militaires et Citoyennes. Chaque publication vise à éclairer,
-                analyser et exposer sans juger. Là où d'autres cherchent à convaincre, La Gazette de la Serre cherche à
+            <p class="editorial-text">La Gazette s'attache à offrir à ses lecteurs une vision précise et impartiale
+                des
+                réalités&nbsp;, Diplomatiques, Politiques, Militaires et Citoyennes. Chaque publication vise à
+                éclairer,
+                analyser et exposer sans juger. Là où d'autres cherchent à convaincre, La Gazette de la Serre
+                cherche à
                 comprendre et à faire comprendre.</p>
 
-            <p class="editorial-text">Dans une capitale où l'opinion fluctue au rythme des intérêts, elle s'impose comme
+            <p class="editorial-text">Dans une capitale où l'opinion fluctue au rythme des intérêts, elle s'impose
+                comme
                 un espace de constance, où la plume se veut libre, mesurée et responsable.</p>
 
             <p class="editorial-closing">
@@ -1237,16 +1122,24 @@
                     <p class="card-role">Directeur</p>
                     <h3 class="card-name">Louis-Philippe de la Serre</h3>
                     <hr class="card-rule">
-                    <p class="card-desc">Homme de vision plus que d'exécution, M.&nbsp;de la Serre préside aux destinées
-                        de cette gazette avec un art consommé de la direction&nbsp;— lequel consiste, selon ses propres
-                        termes, à «&nbsp;savoir s'entourer de gens qui travaillent mieux que soi&nbsp;». Rarement aperçu
-                        dans les bureaux de la rédaction avant midi, il gouverne depuis les profondeurs capitonnées de
-                        son salon particulier, où l'on assure que les décisions les plus lumineuses lui viennent entre
-                        deux tasses de thé et une partie de whist. Son génie, car il faut bien l'appeler ainsi, réside
+                    <p class="card-desc">Homme de vision plus que d'exécution, M.&nbsp;de la Serre préside aux
+                        destinées
+                        de cette gazette avec un art consommé de la direction&nbsp;— lequel consiste, selon ses
+                        propres
+                        termes, à «&nbsp;savoir s'entourer de gens qui travaillent mieux que soi&nbsp;». Rarement
+                        aperçu
+                        dans les bureaux de la rédaction avant midi, il gouverne depuis les profondeurs capitonnées
+                        de
+                        son salon particulier, où l'on assure que les décisions les plus lumineuses lui viennent
+                        entre
+                        deux tasses de thé et une partie de whist. Son génie, car il faut bien l'appeler ainsi,
+                        réside
                         dans cette faculté miraculeuse de déléguer chaque tâche à la personne la plus compétente, si
                         bien que le journal fonctionne avec une précision d'horloge&nbsp;— sans que quiconque puisse
-                        affirmer l'y avoir vu contribuer de ses mains. Le succès de la <em>Gazette</em> est la preuve,
-                        s'il en fallait une, que la paresse élevée au rang de méthode produit parfois des résultats que
+                        affirmer l'y avoir vu contribuer de ses mains. Le succès de la <em>Gazette</em> est la
+                        preuve,
+                        s'il en fallait une, que la paresse élevée au rang de méthode produit parfois des résultats
+                        que
                         l'acharnement envie.</p>
                 </div>
             </article>
@@ -1257,13 +1150,17 @@
                 <p class="card-role">Rédacteur en Chef</p>
                 <h3 class="card-name">Louis de la Serre</h3>
                 <hr class="card-rule">
-                <p class="card-desc"><span class="card-initial">S</span>i la <em>Gazette de la Serre</em> possède une
-                    âme, c'est assurément celle de M.&nbsp;Louis de la Serre. Plume infatigable et gardien jaloux de la
-                    syntaxe, il porte sur ses épaules le poids véritable de chaque numéro. C'est sous sa direction que
+                <p class="card-desc"><span class="card-initial">S</span>i la <em>Gazette de la Serre</em> possède
+                    une
+                    âme, c'est assurément celle de M.&nbsp;Louis de la Serre. Plume infatigable et gardien jaloux de
+                    la
+                    syntaxe, il porte sur ses épaules le poids véritable de chaque numéro. C'est sous sa direction
+                    que
                     les mots trouvent leur juste mesure, que les phrases épousent l'élégance et que les articles
                     acquièrent cette rigueur qui fait la réputation de notre feuille. Homme de lettres dans
                     l'acceptation la plus noble du terme, il consacre ses jours et nombre de ses nuits à l'ouvrage,
-                    veillant à ce que chaque ligne publiée soit digne de l'exigence que le journal s'est fixée. On dit
+                    veillant à ce que chaque ligne publiée soit digne de l'exigence que le journal s'est fixée. On
+                    dit
                     de lui qu'il corrige en dormant&nbsp;, ce qui supposerait toutefois qu'il dormît.</p>
             </article>
 
@@ -1273,12 +1170,16 @@
                 <p class="card-role">Journaliste</p>
                 <h3 class="card-name">Léopold de Vaillancourt</h3>
                 <hr class="card-rule">
-                <p class="card-desc"><span class="card-initial">M</span>onsieur de Vaillancourt est de ces hommes devant
+                <p class="card-desc"><span class="card-initial">M</span>onsieur de Vaillancourt est de ces hommes
+                    devant
                     lesquels les bouches les plus closes finissent par s'ouvrir. Spécialiste des entretiens et des
-                    conversations de fond, il possède le talent redoutable de mettre ses interlocuteurs en confiance, si
+                    conversations de fond, il possède le talent redoutable de mettre ses interlocuteurs en
+                    confiance, si
                     bien que les confidences coulent aussi naturellement qu'un bon bordeaux après le dessert. Des
-                    antichambres ministérielles aux salons mondains, son carnet ne désemplit jamais. Il interroge sans
-                    brusquer, écoute avec une patience d'orfèvre et, d'un mot placé au moment opportun, tire le fil qui
+                    antichambres ministérielles aux salons mondains, son carnet ne désemplit jamais. Il interroge
+                    sans
+                    brusquer, écoute avec une patience d'orfèvre et, d'un mot placé au moment opportun, tire le fil
+                    qui
                     démêle tout l'écheveau.</p>
             </article>
 
@@ -1289,9 +1190,12 @@
                 <h3 class="card-name">Lucien Marthe</h3>
                 <hr class="card-rule">
                 <p class="card-desc"><span class="card-initial">L</span>à où M.&nbsp;de Vaillancourt opère dans les
-                    salons, M.&nbsp;Marthe arpente les rues. Infatigable reporter, il est de ceux que l'on croise aussi
-                    bien sur le pavé des Halles qu'aux abords de l'Assemblée, le regard vif et l'oreille aux aguets. Sa
-                    spécialité demeure l'interview de terrain&nbsp;: le témoignage brut, la confession arrachée entre
+                    salons, M.&nbsp;Marthe arpente les rues. Infatigable reporter, il est de ceux que l'on croise
+                    aussi
+                    bien sur le pavé des Halles qu'aux abords de l'Assemblée, le regard vif et l'oreille aux aguets.
+                    Sa
+                    spécialité demeure l'interview de terrain&nbsp;: le témoignage brut, la confession arrachée
+                    entre
                     deux portes, la parole de ceux que d'ordinaire l'on n'entend guère. Si un fait mérite d'être
                     consigné, M.&nbsp;Marthe est déjà en chemin pour le recueillir.</p>
             </article>
@@ -1308,13 +1212,16 @@
                     <hr class="card-rule">
                     <p class="card-desc"><span class="card-initial">D</span>errière chaque feuillet qui parvient aux
                         mains
-                        du lecteur se cache l'œuvre silencieuse de M.&nbsp;Diurnus. Maître des presses et seigneur des
+                        du lecteur se cache l'œuvre silencieuse de M.&nbsp;Diurnus. Maître des presses et seigneur
+                        des
                         rotatives, il règne sur l'imposant atelier mécanique de la <em>Gazette</em> avec l'autorité
-                        tranquille d'un chef d'orchestre dont les musiciens seraient de fonte et d'acier. Logisticien
+                        tranquille d'un chef d'orchestre dont les musiciens seraient de fonte et d'acier.
+                        Logisticien
                         hors
                         pair, il veille à l'approvisionnement en encre, à l'entretien des mécanismes et à la bonne
                         marche de
-                        cette machinerie complexe sans laquelle nos plus belles phrases ne seraient que pensées perdues.
+                        cette machinerie complexe sans laquelle nos plus belles phrases ne seraient que pensées
+                        perdues.
                     </p>
             </article>
 
@@ -1332,6 +1239,10 @@
         <p class="footer-ornament">✦</p>
         <p class="footer-text">La Gazette de la Serre — Maison de la Serre — Paris</p>
         <p class="footer-text">Tous droits réservés — MDCCCLXIX</p>
+        <p class="footer-text" style="margin-top:.8rem;"><a href="admin.html"
+                style="color:var(--ink-faded);text-decoration:none;transition:color .3s ease;"
+                onmouseover="this.style.color='var(--gold-dim)'" onmouseout="this.style.color='var(--ink-faded)'">Accès
+                Rédaction</a></p>
     </footer>
 
     <!-- ==============================================================
@@ -1341,7 +1252,8 @@
         <div class="modal">
             <h2 class="modal-title" id="modal-title">Abonnement à la Gazette</h2>
             <p class="modal-text">
-                Recevez chaque édition de <em>La Gazette de la Serre</em> directement en votre demeure, portée par nos
+                Recevez chaque édition de <em>La Gazette de la Serre</em> directement en votre demeure, portée par
+                nos
                 coursiers les plus diligents.
             </p>
             <p class="modal-price">100 Francs</p>

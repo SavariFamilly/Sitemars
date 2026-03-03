@@ -43,13 +43,26 @@ async function initDatabase() {
             id TEXT PRIMARY KEY,
             username TEXT UNIQUE NOT NULL,
             display_name TEXT NOT NULL,
+            password_hash TEXT NOT NULL,
             quota_max INTEGER DEFAULT 3,
             quota_used INTEGER DEFAULT 0,
             active INTEGER DEFAULT 1,
             created_at TEXT DEFAULT (datetime('now'))
         )
     `);
-    console.log('✓ Table classifieds_accounts créée');
+
+    // Add password_hash column for existing databases backwards compatibility
+    try {
+        // We use a dummy default password hash for existing accounts so the NOT NULL constraint is satisfied
+        // Hash for "password" is: $2a$10$wT0vA.3Yp5Zg.kI5H0T/.O1xPq8C9V.GjH.0oR0X3qVn.5zXG005i (just as fallback)
+        await db.execute(`ALTER TABLE classifieds_accounts ADD COLUMN password_hash TEXT NOT NULL DEFAULT '$2a$10$wT0vA.3Yp5Zg.kI5H0T/.O1xPq8C9V.GjH.0oR0X3qVn.5zXG005i'`);
+        console.log('✓ Colonne password_hash ajoutée à classifieds_accounts');
+    } catch (err) {
+        // Ignore error if column already exists.
+        // Turso typically returns "duplicate column name: password_hash"
+    }
+
+    console.log('✓ Table classifieds_accounts initialisée/mise à jour');
 
     // --- Petites Annonces ---
     await db.execute(`

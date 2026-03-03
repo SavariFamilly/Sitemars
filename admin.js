@@ -212,14 +212,16 @@ document.getElementById('btn-cancel-account').addEventListener('click', () => { 
 
 document.getElementById('btn-save-account').addEventListener('click', async () => {
     const username = document.getElementById('acc-username').value.trim();
+    const password = document.getElementById('acc-password').value;
     const display_name = document.getElementById('acc-display').value.trim();
     const quota_max = parseInt(document.getElementById('acc-quota').value) || 3;
-    if (!username || !display_name) return showToast('Champs requis', true);
+    if (!username || !display_name || !password) return showToast('Champs requis (identifiant, nom d\'affichage, mot de passe)', true);
     try {
-        await apiCall('/classifieds/accounts', 'POST', { username, display_name, quota_max });
+        await apiCall('/classifieds/accounts', 'POST', { username, display_name, password, quota_max });
         showToast('Compte créé');
         formAcc.style.display = 'none';
         document.getElementById('acc-username').value = '';
+        document.getElementById('acc-password').value = '';
         document.getElementById('acc-display').value = '';
         document.getElementById('acc-quota').value = '3';
         loadAccounts();
@@ -243,6 +245,7 @@ async function loadAccounts() {
                     <div class="quota">Quota : <strong>${a.quota_used}</strong> / ${a.quota_max} annonces</div>
                 </div>
                 <div class="item-actions">
+                    <button class="action-btn" onclick="editQuotaAccount('${a.id}', ${a.quota_max})">Modifier Quota</button>
                     <button class="action-btn" onclick="toggleAccount('${a.id}',${a.active ? 0 : 1})">${a.active ? 'Désactiver' : 'Activer'}</button>
                     <button class="action-btn danger" onclick="deleteAccount('${a.id}')">🗑</button>
                 </div>
@@ -258,6 +261,18 @@ window.toggleAccount = async function (id, active) {
     try {
         await apiCall(`/classifieds/accounts/${id}`, 'PUT', { active: !!active });
         showToast(active ? 'Compte activé' : 'Compte désactivé');
+        loadAccounts();
+    } catch (err) { showToast(err.message, true); }
+};
+
+window.editQuotaAccount = async function (id, current_max) {
+    const newVal = prompt(`Modifier le quota (actuel: ${current_max}) :`, current_max);
+    if (newVal === null) return;
+    const max = parseInt(newVal);
+    if (isNaN(max) || max < 1) return showToast('Valeur invalide', true);
+    try {
+        await apiCall(`/classifieds/accounts/${id}`, 'PUT', { quota_max: max });
+        showToast('Quota mis à jour');
         loadAccounts();
     } catch (err) { showToast(err.message, true); }
 };
@@ -356,7 +371,14 @@ window.deleteClassified = async function (id) {
 // ==========================================================
 const btnAddW = document.getElementById('btn-add-wanted');
 const formW = document.getElementById('form-wanted');
-btnAddW.addEventListener('click', () => { formW.style.display = formW.style.display === 'none' ? 'flex' : 'none'; });
+btnAddW.addEventListener('click', () => {
+    formW.style.display = formW.style.display === 'none' ? 'flex' : 'none';
+    if (formW.style.display === 'flex') {
+        ['w-name', 'w-alias', 'w-desc', 'w-crimes', 'w-reward', 'w-image'].forEach(id => document.getElementById(id).value = '');
+        delete formW.dataset.editId;
+        document.getElementById('btn-save-wanted').textContent = "Créer l'Avis";
+    }
+});
 document.getElementById('btn-cancel-wanted').addEventListener('click', () => { formW.style.display = 'none'; });
 
 document.getElementById('btn-save-wanted').addEventListener('click', async () => {
@@ -368,11 +390,20 @@ document.getElementById('btn-save-wanted').addEventListener('click', async () =>
     const image_url = document.getElementById('w-image').value.trim();
     const danger_level = document.getElementById('w-danger').value;
     if (!name || !description) return showToast('Nom et description requis', true);
+
+    const editId = formW.dataset.editId;
     try {
-        await apiCall('/wanted', 'POST', { name, alias: alias || null, description, crimes: crimes || null, reward: reward || null, image_url: image_url || null, danger_level });
-        showToast('Avis de recherche créé');
+        if (editId) {
+            await apiCall(`/wanted/${editId}`, 'PUT', { name, alias: alias || null, description, crimes: crimes || null, reward: reward || null, image_url: image_url || null, danger_level });
+            showToast('Avis de recherche mis à jour');
+        } else {
+            await apiCall('/wanted', 'POST', { name, alias: alias || null, description, crimes: crimes || null, reward: reward || null, image_url: image_url || null, danger_level });
+            showToast('Avis de recherche créé');
+        }
         formW.style.display = 'none';
         ['w-name', 'w-alias', 'w-desc', 'w-crimes', 'w-reward', 'w-image'].forEach(id => document.getElementById(id).value = '');
+        delete formW.dataset.editId;
+        document.getElementById('btn-save-wanted').textContent = "Créer l'Avis";
         loadWanted(); loadDashboardStats();
     } catch (err) { showToast(err.message, true); }
 });
@@ -397,6 +428,7 @@ async function loadWanted() {
                 </div>
                 <div class="item-actions">
                     ${w.status === 'active' ? `<button class="action-btn" onclick="archiveWanted('${w.id}')">Archiver</button>` : `<button class="action-btn approve" onclick="reactivateWanted('${w.id}')">Réactiver</button>`}
+                    <button class="action-btn primary" onclick="editWanted('${w.id}')">Éditer</button>
                     <button class="action-btn danger" onclick="deleteWanted('${w.id}')">🗑</button>
                 </div>
             </div>
@@ -417,6 +449,27 @@ window.reactivateWanted = async function (id) {
         await apiCall(`/wanted/${id}`, 'PUT', { status: 'active' });
         showToast('Avis réactivé');
         loadWanted(); loadDashboardStats();
+    } catch (err) { showToast(err.message, true); }
+};
+
+window.editWanted = async function (id) {
+    try {
+        const posters = await apiCall('/wanted');
+        const w = posters.find(x => x.id === id);
+        if (!w) return;
+
+        document.getElementById('w-name').value = w.name;
+        document.getElementById('w-alias').value = w.alias || '';
+        document.getElementById('w-desc').value = w.description || '';
+        document.getElementById('w-crimes').value = w.crimes || '';
+        document.getElementById('w-reward').value = w.reward || '';
+        document.getElementById('w-image').value = w.image_url || '';
+        document.getElementById('w-danger').value = w.danger_level || 'moyen';
+
+        formW.dataset.editId = id;
+        document.getElementById('btn-save-wanted').textContent = "Mettre à jour l'Avis";
+        formW.style.display = 'flex';
+        formW.scrollIntoView({ behavior: 'smooth' });
     } catch (err) { showToast(err.message, true); }
 };
 

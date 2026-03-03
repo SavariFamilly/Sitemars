@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Petites Annonces — La Gazette de la Serre</title>
+    <meta name="description"
+        content="Petites annonces parisiennes — offres, demandes et avis divers publiés dans La Gazette de la Serre.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=IM+Fell+Double+Pica:ital@0;1&family=IM+Fell+English:ital@0;1&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* BOARD */
+        .board {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.5rem 2rem 2rem
+        }
+
+        /* FILTERS */
+        .filters {
+            display: flex;
+            gap: .4rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            justify-content: center
+        }
+
+        .filter-btn {
+            font-family: var(--font-body);
+            font-size: .7rem;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            background: rgba(0, 0, 0, .3);
+            border: 1px solid rgba(90, 74, 50, .3);
+            color: var(--parchment-dark);
+            padding: .4rem 1.2rem;
+            cursor: pointer;
+            transition: all var(--transition);
+        }
+
+        .filter-btn:hover {
+            border-color: var(--gold-dim);
+            color: var(--parchment)
+        }
+
+        .filter-btn.active {
+            background: var(--gold-dim);
+            color: var(--ink);
+            border-color: var(--gold)
+        }
+
+        /* GRID */
+        .annonces-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem
+        }
+
+        /* CARD / SMALL NOTE */
+        .annonce {
+            background: linear-gradient(155deg, #f5ecd6 0%, #ede0c0 40%, #e4d4ae 100%);
+            color: var(--ink);
+            padding: 0;
+            position: relative;
+            box-shadow: 2px 4px 12px rgba(0, 0, 0, .35);
+            transform: rotate(var(--rot, 0deg));
+            transition: all .35s ease;
+        }
+
+        .annonce:nth-child(4n+1) {
+            --rot: -1deg
+        }
+
+        .annonce:nth-child(4n+2) {
+            --rot: .7deg
+        }
+
+        .annonce:nth-child(4n+3) {
+            --rot: -0.3deg
+        }
+
+        .annonce:nth-child(4n+4) {
+            --rot: 1.2deg
+        }
+
+        .annonce:hover {
+            transform: rotate(0deg) scale(1.04) translateY(-4px);
+            box-shadow: 4px 8px 24px rgba(0, 0, 0, .5);
+            z-index: 10
+        }
+
+        /* Pin */
+        .annonce::before {
+            content: '';
+            position: absolute;
+            top: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            z-index: 5;
+            background: radial-gradient(circle at 40% 35%, var(--pin-color, #aa3333) 0%, color-mix(in srgb, var(--pin-color, #aa3333) 70%, #000) 100%);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, .4), inset 0 1px 2px rgba(255, 255, 255, .4);
+        }
+
+        .annonce:nth-child(4n+1) {
+            --pin-color: #aa3333
+        }
+
+        .annonce:nth-child(4n+2) {
+            --pin-color: #336688
+        }
+
+        .annonce:nth-child(4n+3) {
+            --pin-color: #338844
+        }
+
+        .annonce:nth-child(4n+4) {
+            --pin-color: #aa8822
+        }
+
+        .annonce-inner {
+            padding: 1.8rem 1.5rem 1.3rem
+        }
+
+        .annonce-cat {
+            font-size: .6rem;
+            letter-spacing: .25em;
+            text-transform: uppercase;
+            color: var(--gold-dim);
+            margin-bottom: .3rem
+        }
+
+        .annonce-title {
+            font-family: var(--font-display);
+            font-size: 1.15rem;
+            color: var(--ink);
+            margin-bottom: .4rem;
+            line-height: 1.3
+        }
+
+        .annonce-content {
+            font-size: .82rem;
+            color: var(--ink-light);
+            line-height: 1.7;
+            text-align: justify;
+            hyphens: auto
+        }
+
+        .annonce-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: .8rem;
+            padding-top: .6rem;
+            border-top: 1px solid rgba(90, 74, 50, .15)
+        }
+
+        .annonce-author {
+            font-size: .7rem;
+            color: var(--ink-faded);
+            font-style: italic
+        }
+
+        .annonce-date {
+            font-size: .6rem;
+            letter-spacing: .15em;
+            text-transform: uppercase;
+            color: var(--ink-faded)
+        }
+
+        .empty {
+            text-align: center;
+            padding: 5rem 2rem;
+            color: var(--ink-faded);
+            font-style: italic;
+            font-size: 1rem;
+            grid-column: 1/-1
+        }
+
+        /* MY DASHBOARD */
+        .my-dashboard {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--gold-dim);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            display: none;
+        }
+
+        .my-dashboard.active {
+            display: block;
+        }
+
+        .my-dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .my-dashboard h3 {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            color: var(--gold);
+        }
+
+        .my-quota {
+            font-size: 0.9rem;
+            color: var(--parchment-alt);
+        }
+
+        .my-quota strong {
+            color: var(--gold-bright);
+        }
+
+        .my-ads-list {
+            margin-top: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .my-ad-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-left: 3px solid var(--gold-dim);
+            padding: 0.8rem 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .my-ad-info h4 {
+            font-family: var(--font-display);
+            color: var(--parchment);
+            font-size: 1.1rem;
+        }
+
+        .my-ad-info p {
+            font-size: 0.8rem;
+            color: var(--ink-faded);
+        }
+
+        .btn-action {
+            background: transparent;
+            border: 1px solid var(--gold-dim);
+            color: var(--gold);
+            padding: 0.4rem 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: var(--font-body);
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+        }
+
+        .btn-action:hover {
+            background: var(--gold-dim);
+            color: var(--ink);
+        }
+
+        .btn-action:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* LOGIN / PUBLISH MODAL */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+
+        .modal.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .modal-content {
+            background: var(--bg-dark);
+            border: 1px solid var(--gold-dim);
+            padding: 2rem;
+            width: 90%;
+            max-width: 450px;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: none;
+            border: none;
+            color: var(--gold);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .modal-title {
+            font-family: var(--font-display);
+            color: var(--parchment);
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.3rem;
+            font-size: 0.8rem;
+            color: var(--gold-dim);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.6rem;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--rule-light);
+            color: var(--parchment);
+            font-family: var(--font-body);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--gold);
+        }
+
+        .form-error {
+            color: var(--red-glow);
+            font-size: 0.8rem;
+            margin-bottom: 1rem;
+            text-align: center;
+            min-height: 1.2rem;
+        }
+
+        @keyframes pinDrop {
+            from {
+                opacity: 0;
+                transform: translateY(-20px) rotate(var(--rot, 0deg))
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) rotate(var(--rot, 0deg))
+            }
+        }
+
+        .annonce {
+            opacity: 0;
+            animation: pinDrop .5s ease forwards
+        }
+
+        .annonce:nth-child(1) {
+            animation-delay: .05s
+        }
+
+        .annonce:nth-child(2) {
+            animation-delay: .1s
+        }
+
+        .annonce:nth-child(3) {
+            animation-delay: .15s
+        }
+
+        .annonce:nth-child(4) {
+            animation-delay: .2s
+        }
+
+        .annonce:nth-child(5) {
+            animation-delay: .25s
+        }
+
+        .annonce:nth-child(6) {
+            animation-delay: .3s
+        }
+
+        @media(max-width:768px) {
+            .annonces-grid {
+                grid-template-columns: 1fr
+            }
+
+            .board {
+                padding: 1rem
+            }
+
+            .page-hero-title {
+                font-size: 2rem
+            }
+
+            .navbar {
+                padding: 0 1rem
+            }
+
+            .nav-links {
+                display: none
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-patterened">
+    <nav class="navbar">
+        <a href="index.html" class="navbar-logo">La Gazette de la Serre</a>
+        <ul class="navbar-links">
+            <li><a href="index.html" class="nav-link">Accueil</a></li>
+            <li><a href="petites-annonces.html" class="nav-link active">Annonces</a></li>
+            <li><a href="avis-de-recherche.html" class="nav-link">Avis de Recherche</a></li>
+            <li><a href="lettres.html" class="nav-link">Écrire à la Rédaction</a></li>
+        </ul>
+        <button id="btn-login-trigger" class="btn-action" style="margin-right:2rem;font-size:0.65rem">Accès
+            Annonceur</button>
+    </nav>
+
+    <header class="page-hero">
+        <p class="page-hero-label">Rubriques Diverses</p>
+        <h1 class="page-hero-title">Petites Annonces</h1>
+        <hr class="page-hero-rule">
+        <p class="page-hero-sub">Offres, demandes, services et avis divers déposés par les habitants de Paris.</p>
+    </header>
+
+    <main class="board">
+        <div class="my-dashboard animate-on-scroll" id="my-dashboard">
+            <div class="my-dashboard-header">
+                <h3>Mon Espace Annonceur</h3>
+                <div style="display:flex; gap:1rem; align-items:center;">
+                    <div class="my-quota" id="my-quota">Quota: <strong>-</strong> / - annonces</div>
+                    <button class="btn-action" id="btn-new-ad"
+                        style="border-color:var(--gold); color:var(--gold-bright);">Nouvelle Annonce</button>
+                    <button class="btn-action" id="btn-logout"
+                        style="border-color:var(--red-ink); color:var(--red-glow);">Déconnexion</button>
+                </div>
+            </div>
+            <div class="my-ads-list" id="my-ads-list">
+                <!-- User's ads go here -->
+            </div>
+        </div>
+
+        <div class="filters animate-on-scroll delay-1" id="filters">
+            <button class="filter-btn active" data-cat="all">Toutes</button>
+        </div>
+        <div class="annonces-grid animate-on-scroll delay-2" id="annonces-grid">
+            <p class="empty" id="loading">Chargement des annonces…</p>
+        </div>
+    </main>
+
+    <!-- LOGIN MODAL -->
+    <div class="modal" id="login-modal">
+        <div class="modal-content">
+            <button class="modal-close"
+                onclick="document.getElementById('login-modal').classList.remove('active')">✕</button>
+            <h3 class="modal-title">Porte des Annonceurs</h3>
+            <div class="form-error" id="login-error"></div>
+            <form id="login-form">
+                <div class="form-group">
+                    <label>Identifiant</label>
+                    <input type="text" id="login-user" required>
+                </div>
+                <div class="form-group">
+                    <label>Mot de Passe</label>
+                    <input type="password" id="login-pass" required>
+                </div>
+                <button type="submit" class="btn-action" style="width:100%">Entrer</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- POST/EDIT MODAL -->
+    <div class="modal" id="post-modal">
+        <div class="modal-content">
+            <button class="modal-close"
+                onclick="document.getElementById('post-modal').classList.remove('active')">✕</button>
+            <h3 class="modal-title" id="post-modal-title">Publier une Annonce</h3>
+            <div class="form-error" id="post-error"></div>
+            <form id="post-form">
+                <input type="hidden" id="post-id" value="">
+                <div class="form-group">
+                    <label>Catégorie (Optionnel)</label>
+                    <input type="text" id="post-cat" placeholder="Ex: Offre, Demande, Service...">
+                </div>
+                <div class="form-group">
+                    <label>Titre de l'annonce</label>
+                    <input type="text" id="post-title" required>
+                </div>
+                <div class="form-group">
+                    <label>Contenu</label>
+                    <textarea id="post-content" rows="4" required></textarea>
+                </div>
+                <button type="submit" class="btn-action" style="width:100%" id="btn-submit-post">Placarder
+                    l'annonce</button>
+            </form>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p class="footer-ornament">✦</p>
+        <p class="footer-text">La Gazette de la Serre — Paris — MDCCCLXIX</p>
+    </footer>
+
+    <script>
+        const API = window.location.origin + '/api';
+        const grid = document.getElementById('annonces-grid');
+        const filtersDiv = document.getElementById('filters');
+        let allAnnonces = [];
+        let userToken = localStorage.getItem('gazette_user_token');
+        let userQuota = { used: 0, max: 0 };
+
+        function esc(s) { if (!s) return ''; const d = document.createElement('div'); d.textContent = String(s); return d.innerHTML }
+        function fmtDate(iso) { if (!iso) return ''; const d = new Date(iso + 'Z'); return d.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' }) }
+
+        function renderAnnonces(list) {
+            if (!list.length) { grid.innerHTML = '<p class="empty">Nulle annonce n\'est présentement affichée.</p>'; return }
+            grid.innerHTML = list.map(a => `
+                <article class="annonce">
+                    <div class="annonce-inner">
+                        ${a.category ? `<p class="annonce-cat">${esc(a.category)}</p>` : ''}
+                        <h2 class="annonce-title">${esc(a.title)}</h2>
+                        <p class="annonce-content">${esc(a.content)}</p>
+                        <div class="annonce-footer">
+                            <span class="annonce-author">${esc(a.author_name || 'Anonyme')}</span>
+                            <span class="annonce-date">${fmtDate(a.created_at)}</span>
+                        </div>
+                    </div>
+                </article>
+            `).join('');
+        }
+
+        async function loadAnnonces() {
+            try {
+                const res = await fetch(API + '/classifieds/public');
+                allAnnonces = await res.json();
+                const cats = new Set(allAnnonces.filter(a => a.category).map(a => a.category));
+                filtersDiv.innerHTML = '<button class="filter-btn active" data-cat="all">Toutes</button>' +
+                    [...cats].map(c => `<button class="filter-btn" data-cat="${esc(c)}">${esc(c)}</button>`).join('');
+                filtersDiv.querySelectorAll('.filter-btn').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        filtersDiv.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                        btn.classList.add('active');
+                        const cat = btn.dataset.cat;
+                        renderAnnonces(cat === 'all' ? allAnnonces : allAnnonces.filter(a => a.category === cat));
+                    });
+                });
+                renderAnnonces(allAnnonces);
+            } catch (err) { grid.innerHTML = '<p class="empty">Erreur de chargement.</p>' }
+        }
+
+        // --- Authentication & User Dashboard ---
+
+        async function loadMyDashboard() {
+            if (!userToken) return;
+            try {
+                const res = await fetch(API + '/classifieds/my', {
+                    headers: { 'x-user-token': userToken }
+                });
+                if (!res.ok) throw new Error('Session expirée');
+                const data = await res.json();
+
+                document.getElementById('btn-login-trigger').style.display = 'none';
+                document.getElementById('my-dashboard').classList.add('active');
+
+                userQuota = { used: data.quota.quota_used, max: data.quota.quota_max };
+                document.getElementById('my-quota').innerHTML = `Quota: <strong>${userQuota.used}</strong> / ${userQuota.max} annonces`;
+
+                // Update New Ad button state based on quota
+                const btnNew = document.getElementById('btn-new-ad');
+                if (userQuota.used >= userQuota.max) {
+                    btnNew.disabled = true;
+                    btnNew.title = "Quota atteint";
+                } else {
+                    btnNew.disabled = false;
+                    btnNew.title = "";
+                }
+
+                const myList = document.getElementById('my-ads-list');
+                if (data.ads.length === 0) {
+                    myList.innerHTML = '<p class="empty" style="padding:1rem">Vous n\'avez publié aucune annonce.</p>';
+                } else {
+                    myList.innerHTML = data.ads.map(ad => `
+                        <div class="my-ad-item">
+                            <div class="my-ad-info">
+                                <h4>${esc(ad.title)}</h4>
+                                <p>${esc(ad.category || 'Sans catégorie')} - Statut: ${ad.status === 'active' ? 'Active' : 'En modération'}</p>
+                            </div>
+                            <button class="btn-action" onclick="openEditModal('${ad.id}', '${esc(ad.title).replace(/'/g, "\\'")}', '${esc(ad.content).replace(/'/g, "\\'")}', '${esc(ad.category || '').replace(/'/g, "\\'")}')">Éditer (Gratuit)</button>
+                        </div>
+                    `).join('');
+                }
+            } catch (error) {
+                userToken = null;
+                localStorage.removeItem('gazette_user_token');
+                document.getElementById('btn-login-trigger').style.display = 'block';
+                document.getElementById('my-dashboard').classList.remove('active');
+            }
+        }
+
+        document.getElementById('btn-login-trigger').addEventListener('click', () => {
+            document.getElementById('login-modal').classList.add('active');
+        });
+
+        document.getElementById('login-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const u = document.getElementById('login-user').value;
+            const p = document.getElementById('login-pass').value;
+            try {
+                const res = await fetch(API + '/classifieds/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username: u, password: p })
+                });
+                const data = await res.json();
+                if (!res.ok) throw new Error(data.error);
+
+                userToken = data.token;
+                localStorage.setItem('gazette_user_token', userToken);
+                document.getElementById('login-modal').classList.remove('active');
+                loadMyDashboard();
+            } catch (err) {
+                document.getElementById('login-error').textContent = err.message;
+            }
+        });
+
+        document.getElementById('btn-logout').addEventListener('click', () => {
+            userToken = null;
+            localStorage.removeItem('gazette_user_token');
+            document.getElementById('btn-login-trigger').style.display = 'block';
+            document.getElementById('my-dashboard').classList.remove('active');
+        });
+
+        // --- Posting and Editing ---
+        document.getElementById('btn-new-ad').addEventListener('click', () => {
+            document.getElementById('post-id').value = '';
+            document.getElementById('post-title').value = '';
+            document.getElementById('post-content').value = '';
+            document.getElementById('post-cat').value = '';
+            document.getElementById('post-modal-title').textContent = 'Publier une Annonce (-1 Quota)';
+            document.getElementById('post-error').textContent = '';
+            document.getElementById('post-modal').classList.add('active');
+        });
+
+        window.openEditModal = function (id, title, content, cat) {
+            document.getElementById('post-id').value = id;
+            document.getElementById('post-title').value = title;
+            document.getElementById('post-content').value = content;
+            document.getElementById('post-cat').value = cat;
+            document.getElementById('post-modal-title').textContent = 'Modifier l\'Annonce (Gratuit)';
+            document.getElementById('post-error').textContent = '';
+            document.getElementById('post-modal').classList.add('active');
+        };
+
+        document.getElementById('post-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('btn-submit-post');
+            btn.disabled = true;
+
+            const id = document.getElementById('post-id').value;
+            const isEdit = !!id;
+            const endpoint = isEdit ? `/classifieds/my/${id}` : '/classifieds/my';
+            const method = isEdit ? 'PUT' : 'POST';
+
+            const payload = {
+                title: document.getElementById('post-title').value,
+                content: document.getElementById('post-content').value,
+                category: document.getElementById('post-cat').value || null
+            };
+
+            try {
+                const res = await fetch(API + endpoint, {
+                    method,
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'x-user-token': userToken
+                    },
+                    body: JSON.stringify(payload)
+                });
+                const data = await res.json();
+                if (!res.ok) throw new Error(data.error || 'Erreur inconnue');
+
+                document.getElementById('post-modal').classList.remove('active');
+                loadAnnonces();
+                loadMyDashboard();
+            } catch (err) {
+                document.getElementById('post-error').textContent = err.message;
+            } finally {
+                btn.disabled = false;
+            }
+        });
+
+        // Init
+        loadAnnonces();
+        if (userToken) loadMyDashboard();
+
+        /* Intersection Observer for scroll animations */
+        const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        setTimeout(() => {
+            document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+        }, 500); // slight delay to allow rendering
+    </script>
+</body>
+
+</html>
