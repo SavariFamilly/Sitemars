@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bureau de la Rédaction — La Gazette de la Serre</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=IM+Fell+Double+Pica:ital@0;1&family=IM+Fell+English:ital@0;1&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="admin.css">
+</head>
+
+<body>
+    <!-- LOGIN SCREEN -->
+    <div class="login-overlay" id="login-overlay">
+        <div class="login-card">
+            <div class="login-seal">✦</div>
+            <p class="login-label">Bureau de la Rédaction</p>
+            <h1 class="login-title">La Gazette de la Serre</h1>
+            <hr class="login-rule">
+            <p class="login-subtitle">Accès réservé aux membres de la rédaction.<br>Veuillez présenter votre mot de
+                passe.</p>
+            <form id="login-form" autocomplete="off">
+                <div class="login-field">
+                    <label for="login-password">Mot de passe</label>
+                    <input type="password" id="login-password" name="password" placeholder="Saisissez le mot de passe…"
+                        required>
+                </div>
+                <p class="login-error" id="login-error"></p>
+                <button type="submit" class="login-btn" id="login-btn">
+                    <span>Entrer dans la Rédaction</span>
+                </button>
+            </form>
+            <p class="login-footer">«&nbsp;La plume est libre, mais la porte est gardée.&nbsp;»</p>
+        </div>
+    </div>
+
+    <!-- DASHBOARD -->
+    <div class="dashboard" id="dashboard" style="display:none;">
+        <!-- Top bar -->
+        <header class="topbar">
+            <a href="index.html" class="topbar-logo">← La Gazette</a>
+            <h2 class="topbar-title">Bureau de la Rédaction</h2>
+            <button class="topbar-logout" id="btn-logout">Déconnexion</button>
+        </header>
+
+        <!-- Stats bar -->
+        <div class="stats-bar" id="stats-bar">
+            <div class="stat-card" id="stat-letters">
+                <span class="stat-icon">✉</span>
+                <div><span class="stat-num" id="stat-letters-pending">0</span><span class="stat-label">Lettres en
+                        attente</span></div>
+            </div>
+            <div class="stat-card" id="stat-classifieds">
+                <span class="stat-icon">📜</span>
+                <div><span class="stat-num" id="stat-classifieds-active">0</span><span class="stat-label">Annonces
+                        actives</span></div>
+            </div>
+            <div class="stat-card" id="stat-wanted">
+                <span class="stat-icon">🔍</span>
+                <div><span class="stat-num" id="stat-wanted-active">0</span><span class="stat-label">Avis en
+                        cours</span></div>
+            </div>
+            <div class="stat-card" id="stat-accounts">
+                <span class="stat-icon">👤</span>
+                <div><span class="stat-num" id="stat-accounts-count">0</span><span class="stat-label">Comptes
+                        actifs</span></div>
+            </div>
+        </div>
+
+        <!-- Tabs -->
+        <nav class="tabs" id="tabs">
+            <button class="tab active" data-tab="letters">✉ Lettres à la Rédaction</button>
+            <button class="tab" data-tab="classifieds">📜 Petites Annonces</button>
+            <button class="tab" data-tab="wanted">🔍 Avis de Recherche</button>
+        </nav>
+
+        <!-- TAB: LETTERS -->
+        <section class="tab-content active" id="tab-letters">
+            <div class="panel-header">
+                <h3>Lettres Reçues</h3>
+                <div class="filter-group">
+                    <button class="filter-btn active" data-filter="all">Toutes</button>
+                    <button class="filter-btn" data-filter="pending">En attente</button>
+                    <button class="filter-btn" data-filter="approved">Approuvées</button>
+                    <button class="filter-btn" data-filter="rejected">Rejetées</button>
+                </div>
+            </div>
+            <div class="items-list" id="letters-list">
+                <p class="empty-state">Aucune lettre reçue pour le moment.</p>
+            </div>
+        </section>
+
+        <!-- TAB: CLASSIFIEDS -->
+        <section class="tab-content" id="tab-classifieds">
+            <!-- Sub-tabs -->
+            <div class="sub-tabs">
+                <button class="sub-tab active" data-subtab="accounts">Comptes Autorisés</button>
+                <button class="sub-tab" data-subtab="posts">Annonces Publiées</button>
+            </div>
+
+            <!-- Accounts sub-panel -->
+            <div class="sub-panel active" id="subtab-accounts">
+                <div class="panel-header">
+                    <h3>Comptes Autorisés</h3>
+                    <button class="action-btn primary" id="btn-add-account">+ Nouveau Compte</button>
+                </div>
+                <!-- Add account form (hidden) -->
+                <div class="inline-form" id="form-account" style="display:none;">
+                    <input type="text" id="acc-username" placeholder="Identifiant (ex: dupont)" required>
+                    <input type="text" id="acc-display" placeholder="Nom d'affichage (ex: M. Dupont)" required>
+                    <input type="number" id="acc-quota" placeholder="Quota" value="3" min="1" max="50">
+                    <button class="action-btn primary" id="btn-save-account">Créer</button>
+                    <button class="action-btn" id="btn-cancel-account">Annuler</button>
+                </div>
+                <div class="items-list" id="accounts-list">
+                    <p class="empty-state">Aucun compte autorisé.</p>
+                </div>
+            </div>
+
+            <!-- Posts sub-panel -->
+            <div class="sub-panel" id="subtab-posts">
+                <div class="panel-header">
+                    <h3>Annonces Publiées</h3>
+                    <button class="action-btn primary" id="btn-add-classified">+ Nouvelle Annonce</button>
+                </div>
+                <div class="inline-form" id="form-classified" style="display:none;">
+                    <select id="cl-account">
+                        <option value="">Choisir un compte...</option>
+                    </select>
+                    <input type="text" id="cl-title" placeholder="Titre de l'annonce" required>
+                    <textarea id="cl-content" placeholder="Contenu de l'annonce…" rows="3" required></textarea>
+                    <input type="text" id="cl-category" placeholder="Catégorie (optionnel)">
+                    <button class="action-btn primary" id="btn-save-classified">Publier</button>
+                    <button class="action-btn" id="btn-cancel-classified">Annuler</button>
+                </div>
+                <div class="items-list" id="classifieds-list">
+                    <p class="empty-state">Aucune annonce publiée.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB: WANTED -->
+        <section class="tab-content" id="tab-wanted">
+            <div class="panel-header">
+                <h3>Avis de Recherche</h3>
+                <button class="action-btn primary" id="btn-add-wanted">+ Nouvel Avis</button>
+            </div>
+            <div class="inline-form" id="form-wanted" style="display:none;">
+                <input type="text" id="w-name" placeholder="Nom du recherché" required>
+                <input type="text" id="w-alias" placeholder="Alias / Surnom (optionnel)">
+                <textarea id="w-desc" placeholder="Description…" rows="3" required></textarea>
+                <input type="text" id="w-crimes" placeholder="Crimes / Chefs d'accusation">
+                <input type="text" id="w-reward" placeholder="Récompense (ex: 500 Francs)">
+                <input type="text" id="w-image" placeholder="URL de l'image (optionnel)">
+                <select id="w-danger">
+                    <option value="faible">Danger : Faible</option>
+                    <option value="moyen" selected>Danger : Moyen</option>
+                    <option value="élevé">Danger : Élevé</option>
+                    <option value="extrême">Danger : Extrême</option>
+                </select>
+                <button class="action-btn primary" id="btn-save-wanted">Créer l'Avis</button>
+                <button class="action-btn" id="btn-cancel-wanted">Annuler</button>
+            </div>
+            <div class="items-list" id="wanted-list">
+                <p class="empty-state">Aucun avis de recherche.</p>
+            </div>
+        </section>
+    </div>
+
+    <!-- MODAL for viewing letter detail -->
+    <div class="modal-overlay" id="detail-modal">
+        <div class="detail-card">
+            <button class="detail-close" id="detail-close">✕</button>
+            <div id="detail-body"></div>
+        </div>
+    </div>
+
+    <!-- Toast notification -->
+    <div class="toast" id="toast"></div>
+
+    <script src="admin.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,1443 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Gazette de la Serre — Paris, 1869</title>
+    <meta name="description"
+        content="La Gazette de la Serre, journal parisien indépendant. Accédez aux éditions, aux archives et à la rédaction.">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=IM+Fell+Double+Pica:ital@0;1&family=IM+Fell+English:ital@0;1&display=swap"
+        rel="stylesheet">
+
+    <style>
+        /* ==========================================================
+           GAZETTE DE LA SERRE — INTERACTIVE HUB
+           Esthétique : Second Empire × Modern Web, circa 1869
+        ========================================================== */
+
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-dark: #0e0a04;
+            --bg-wood: #1a120a;
+            --bg-panel: #151009;
+            --parchment: #ede0c0;
+            --parchment-alt: #e4d4ae;
+            --parchment-light: #f5ecd6;
+            --ink: #160e04;
+            --ink-light: #3a2e1e;
+            --ink-faded: #6b5a42;
+            --red-ink: #7a2e2e;
+            --red-glow: #a04040;
+            --gold: #b8942e;
+            --gold-dim: #8b7232;
+            --gold-bright: #d4aa3c;
+            --rule: #5a4a32;
+            --rule-light: #3a2e1e;
+            --shadow: rgba(0, 0, 0, .5);
+
+            --font-display: 'IM Fell Double Pica', 'Georgia', serif;
+            --font-body: 'IM Fell English', 'Georgia', serif;
+
+            --nav-height: 64px;
+            --transition: .3s ease;
+        }
+
+        html {
+            font-size: 17px;
+            scroll-behavior: smooth;
+            scroll-padding-top: calc(var(--nav-height) + 1rem);
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--bg-dark);
+            color: var(--parchment);
+            line-height: 1.7;
+            min-height: 100vh;
+        }
+
+        /* ==========================================================
+           NAVBAR — BARRE DE NAVIGATION
+        ========================================================== */
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: var(--nav-height);
+            padding: 0 2rem;
+            background: linear-gradient(180deg, #12090380, #0e0a04f0 60%);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--rule);
+        }
+
+        .navbar-logo {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            letter-spacing: .08em;
+            color: var(--gold);
+            text-decoration: none;
+            transition: color var(--transition);
+            white-space: nowrap;
+        }
+
+        .navbar-logo:hover,
+        .navbar-logo:focus-visible {
+            color: var(--gold-bright);
+        }
+
+        .navbar-links {
+            display: flex;
+            align-items: center;
+            gap: 0.2rem;
+            list-style: none;
+        }
+
+        .nav-link {
+            position: relative;
+            font-family: var(--font-body);
+            font-size: 0.82rem;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            color: var(--parchment-alt);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            transition: color var(--transition);
+            cursor: pointer;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 2px;
+            left: 50%;
+            width: 0;
+            height: 1px;
+            background: var(--red-ink);
+            transition: width var(--transition), left var(--transition);
+        }
+
+        .nav-link:hover,
+        .nav-link:focus-visible {
+            color: var(--red-glow);
+        }
+
+        .nav-link:hover::after,
+        .nav-link:focus-visible::after {
+            width: 70%;
+            left: 15%;
+        }
+
+        .nav-link.active {
+            color: var(--gold);
+        }
+
+        .nav-link.active::after {
+            width: 70%;
+            left: 15%;
+            background: var(--gold-dim);
+        }
+
+        /* --- Bouton S'abonner --- */
+        .btn-subscribe {
+            font-family: var(--font-body);
+            font-size: 0.75rem;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            color: var(--bg-dark);
+            background: linear-gradient(135deg, var(--gold), var(--gold-dim));
+            border: 1px solid var(--gold-dim);
+            padding: 0.45rem 1.2rem;
+            margin-left: 1rem;
+            cursor: pointer;
+            transition: all var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-subscribe::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, var(--gold-bright), var(--gold));
+            opacity: 0;
+            transition: opacity var(--transition);
+        }
+
+        .btn-subscribe span {
+            position: relative;
+            z-index: 1;
+        }
+
+        .btn-subscribe:hover,
+        .btn-subscribe:focus-visible {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 16px rgba(184, 148, 46, .35);
+        }
+
+        .btn-subscribe:hover::before {
+            opacity: 1;
+        }
+
+        .btn-subscribe:active {
+            transform: translateY(1px);
+            box-shadow: 0 1px 4px rgba(184, 148, 46, .2);
+        }
+
+        /* --- Hamburger (mobile) --- */
+        .navbar-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px;
+        }
+
+        .navbar-toggle span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--parchment);
+            transition: all var(--transition);
+        }
+
+        /* ==========================================================
+           HERO SECTION — MANCHETTE
+        ========================================================== */
+        .hero {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 5rem 2rem 4rem;
+            min-height: 70vh;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse at 50% 30%, rgba(184, 148, 46, .06) 0%, transparent 60%),
+                radial-gradient(ellipse at 50% 100%, rgba(14, 10, 4, .9) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .hero-ornament-top {
+            font-size: 0.7rem;
+            letter-spacing: .5em;
+            text-transform: uppercase;
+            color: var(--gold-dim);
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            animation: fadeDown .8s .2s ease-out forwards;
+        }
+
+        .hero-title {
+            font-family: var(--font-display);
+            font-size: 4.5rem;
+            font-weight: 400;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            color: var(--parchment-light);
+            line-height: 1.05;
+            margin-bottom: .4rem;
+            opacity: 0;
+            animation: fadeDown .8s .4s ease-out forwards;
+        }
+
+        .hero-subtitle {
+            font-family: var(--font-display);
+            font-style: italic;
+            font-size: 1.15rem;
+            color: var(--gold);
+            letter-spacing: .15em;
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            animation: fadeDown .8s .55s ease-out forwards;
+        }
+
+        .hero-rule {
+            width: 120px;
+            height: 1px;
+            background: var(--rule);
+            border: none;
+            margin: 0 auto 1.5rem;
+            opacity: 0;
+            animation: fadeDown .6s .7s ease-out forwards;
+        }
+
+        .hero-tagline {
+            font-family: var(--font-body);
+            font-style: italic;
+            font-size: 0.95rem;
+            color: var(--ink-faded);
+            max-width: 500px;
+            line-height: 1.8;
+            opacity: 0;
+            animation: fadeDown .8s .8s ease-out forwards;
+        }
+
+        .hero-tagline em {
+            color: var(--parchment-alt);
+            font-style: normal;
+        }
+
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: .6rem;
+            margin-top: 2.2rem;
+            font-family: var(--font-body);
+            font-size: .85rem;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            text-decoration: none;
+            color: var(--parchment);
+            border: 1px solid var(--rule);
+            padding: .7rem 2rem;
+            transition: all var(--transition);
+            opacity: 0;
+            animation: fadeDown .8s 1s ease-out forwards;
+            cursor: pointer;
+        }
+
+        .hero-cta:hover,
+        .hero-cta:focus-visible {
+            border-color: var(--gold);
+            color: var(--gold);
+            box-shadow: 0 0 20px rgba(184, 148, 46, .12);
+            transform: translateY(-2px);
+        }
+
+        .hero-cta .arrow {
+            transition: transform var(--transition);
+        }
+
+        .hero-cta:hover .arrow {
+            transform: translateX(4px);
+        }
+
+        /* ==========================================================
+           SECTION — PRÉSENTATION ÉDITORIALE
+        ========================================================== */
+        .section {
+            padding: 4rem 2rem;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .section-label {
+            font-size: .7rem;
+            letter-spacing: .45em;
+            text-transform: uppercase;
+            color: var(--gold-dim);
+            margin-bottom: .5rem;
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            font-weight: 400;
+            letter-spacing: .08em;
+            color: var(--parchment);
+        }
+
+        .section-rule {
+            width: 60px;
+            height: 1px;
+            background: var(--rule);
+            border: none;
+            margin: 1rem auto 0;
+        }
+
+        /* --- Éditoriale box --- */
+        .editorial-panel {
+            background: var(--parchment);
+            color: var(--ink);
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2.8rem 3rem;
+            position: relative;
+            box-shadow: 0 8px 40px rgba(0, 0, 0, .4);
+            transition: box-shadow var(--transition);
+        }
+
+        .editorial-panel:hover {
+            box-shadow: 0 12px 50px rgba(0, 0, 0, .5);
+        }
+
+        /* Bordure intérieure */
+        .editorial-panel::before {
+            content: '';
+            position: absolute;
+            inset: 8px;
+            border: 1px solid var(--parchment-alt);
+            pointer-events: none;
+        }
+
+        .editorial-label {
+            font-family: var(--font-display);
+            font-size: .7rem;
+            letter-spacing: .35em;
+            text-transform: uppercase;
+            color: var(--gold-dim);
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .editorial-text {
+            font-family: var(--font-body);
+            font-size: .92rem;
+            text-align: justify;
+            color: var(--ink-light);
+            line-height: 1.9;
+            hyphens: auto;
+        }
+
+        .editorial-text+.editorial-text {
+            margin-top: 1rem;
+        }
+
+        .drop-cap::first-letter {
+            font-family: var(--font-display);
+            float: left;
+            font-size: 4rem;
+            line-height: .72;
+            padding-right: .1em;
+            padding-top: .06em;
+            color: var(--red-ink);
+        }
+
+        .editorial-closing {
+            text-align: center;
+            font-style: italic;
+            color: var(--red-ink);
+            margin-top: 1.5rem;
+            font-size: .92rem;
+            line-height: 1.8;
+        }
+
+        /* ==========================================================
+           CARTES DU STAFF — GRILLE INTERACTIVE
+        ========================================================== */
+        .staff-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .staff-card {
+            background: var(--parchment);
+            color: var(--ink);
+            padding: 2rem 1.8rem 1.8rem;
+            position: relative;
+            cursor: pointer;
+            transition: all .35s ease;
+            border: 1px solid transparent;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, .3);
+            text-decoration: none;
+            display: block;
+        }
+
+        /* Bordure intérieure */
+        .staff-card::before {
+            content: '';
+            position: absolute;
+            inset: 6px;
+            border: 1px solid var(--parchment-alt);
+            pointer-events: none;
+            transition: border-color var(--transition);
+        }
+
+        .staff-card:hover,
+        .staff-card:focus-visible {
+            transform: translateY(-6px);
+            border-color: var(--gold);
+            box-shadow:
+                0 12px 40px rgba(0, 0, 0, .45),
+                0 0 0 1px var(--gold-dim);
+        }
+
+        .staff-card:hover::before {
+            border-color: var(--gold-dim);
+        }
+
+        .staff-card:active {
+            transform: translateY(-2px);
+        }
+
+        .card-role {
+            font-family: var(--font-display);
+            font-size: .68rem;
+            letter-spacing: .3em;
+            text-transform: uppercase;
+            color: var(--gold-dim);
+            margin-bottom: .25rem;
+        }
+
+        .card-name {
+            font-family: var(--font-display);
+            font-size: 1.35rem;
+            color: var(--ink);
+            line-height: 1.2;
+            margin-bottom: .15rem;
+        }
+
+        .card-rule {
+            width: 40px;
+            height: 1px;
+            background: var(--rule);
+            border: none;
+            margin: .8rem 0;
+        }
+
+        .card-desc {
+            font-family: var(--font-body);
+            font-size: .82rem;
+            color: var(--ink-light);
+            text-align: justify;
+            line-height: 1.75;
+            hyphens: auto;
+        }
+
+        .card-initial {
+            font-family: var(--font-display);
+            float: left;
+            font-size: 2.2rem;
+            line-height: .78;
+            padding-right: .08em;
+            padding-top: .04em;
+            color: var(--red-ink);
+        }
+
+        /* Carte mise en avant — Directeur */
+        .staff-card.featured {
+            grid-column: 1 / -1;
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 2rem;
+            align-items: start;
+            padding: 2.4rem 2.5rem;
+        }
+
+        .featured-ornament {
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            width: 90px;
+            padding-top: .3rem;
+        }
+
+        .featured-initial {
+            font-family: var(--font-display);
+            font-size: 5rem;
+            line-height: .85;
+            color: var(--red-ink);
+            user-select: none;
+        }
+
+        .featured-body .card-desc {
+            font-size: .88rem;
+        }
+
+        /* ==========================================================
+           SECTION LINKS — RACCOURCIS RAPIDES
+        ========================================================== */
+        .quick-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .quick-link {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.3rem 1.5rem;
+            border: 1px solid var(--rule);
+            background: var(--bg-panel);
+            text-decoration: none;
+            color: var(--parchment);
+            transition: all var(--transition);
+            cursor: pointer;
+        }
+
+        .quick-link:hover,
+        .quick-link:focus-visible {
+            border-color: var(--gold-dim);
+            background: var(--bg-wood);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, .3);
+        }
+
+        .quick-link-icon {
+            font-size: 1.5rem;
+            flex-shrink: 0;
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--rule);
+            color: var(--gold);
+            transition: border-color var(--transition), color var(--transition);
+        }
+
+        .quick-link:hover .quick-link-icon {
+            border-color: var(--gold-dim);
+            color: var(--gold-bright);
+        }
+
+        .quick-link-label {
+            font-family: var(--font-body);
+            font-size: .8rem;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+        }
+
+        .quick-link-sub {
+            font-size: .68rem;
+            color: var(--ink-faded);
+            letter-spacing: .05em;
+            margin-top: .15rem;
+            text-transform: none;
+        }
+
+        /* ==========================================================
+           SECTION ÉDITIONS — GRILLE DE CARTES-JOURNAL
+        ========================================================== */
+        .editions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 1.5rem;
+        }
+
+        .edition-card {
+            background: var(--parchment);
+            color: var(--ink);
+            position: relative;
+            cursor: pointer;
+            transition: all .4s ease;
+            border: 1px solid transparent;
+            box-shadow: 0 6px 30px rgba(0, 0, 0, .35);
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .edition-card::before {
+            content: '';
+            position: absolute;
+            inset: 6px;
+            border: 1px solid var(--parchment-alt);
+            pointer-events: none;
+            transition: border-color var(--transition);
+            z-index: 2;
+        }
+
+        .edition-card:hover,
+        .edition-card:focus-visible {
+            transform: translateY(-8px);
+            border-color: var(--gold);
+            box-shadow:
+                0 16px 50px rgba(0, 0, 0, .5),
+                0 0 0 1px var(--gold-dim),
+                0 0 30px rgba(184, 148, 46, .08);
+        }
+
+        .edition-card:hover::before {
+            border-color: var(--gold-dim);
+        }
+
+        .edition-card:active {
+            transform: translateY(-3px);
+        }
+
+        .edition-card-img {
+            position: relative;
+            width: 100%;
+            height: 260px;
+            overflow: hidden;
+        }
+
+        .edition-card-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform .6s ease;
+        }
+
+        .edition-card:hover .edition-card-img img {
+            transform: scale(1.05);
+        }
+
+        .edition-card-img::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, transparent 40%, rgba(22, 14, 4, .6) 100%);
+            pointer-events: none;
+        }
+
+        .edition-badge {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            z-index: 3;
+            font-family: var(--font-display);
+            font-size: .6rem;
+            letter-spacing: .25em;
+            text-transform: uppercase;
+            background: var(--red-ink);
+            color: var(--parchment);
+            padding: .3rem .8rem;
+            border: 1px solid rgba(184, 148, 46, .3);
+            box-shadow: 0 2px 10px rgba(139, 26, 26, .4);
+        }
+
+        .edition-card-body {
+            padding: 1.5rem 1.8rem 1.8rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .edition-card-title {
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            color: var(--ink);
+            line-height: 1.25;
+            margin-bottom: .3rem;
+        }
+
+        .edition-card-date {
+            font-family: var(--font-body);
+            font-size: .72rem;
+            letter-spacing: .15em;
+            text-transform: uppercase;
+            color: var(--gold-dim);
+            margin-bottom: .8rem;
+        }
+
+        .edition-card-summary {
+            font-family: var(--font-body);
+            font-size: .84rem;
+            color: var(--ink-light);
+            line-height: 1.7;
+            text-align: justify;
+            hyphens: auto;
+            flex: 1;
+        }
+
+        .btn-read {
+            display: inline-flex;
+            align-items: center;
+            gap: .5rem;
+            font-family: var(--font-body);
+            font-size: .78rem;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            color: var(--ink);
+            text-decoration: none;
+            padding: .6rem 0;
+            margin-top: 1rem;
+            border-top: 1px solid var(--parchment-alt);
+            transition: color var(--transition);
+        }
+
+        .btn-read:hover {
+            color: var(--red-ink);
+        }
+
+        .btn-read .arrow {
+            transition: transform var(--transition);
+        }
+
+        .btn-read:hover .arrow {
+            transform: translateX(4px);
+        }
+
+        /* ==========================================================
+           FOOTER
+        ========================================================== */
+        .footer {
+            text-align: center;
+            padding: 3rem 2rem 2rem;
+            border-top: 1px solid var(--rule-light);
+            margin-top: 2rem;
+        }
+
+        .footer-quote {
+            font-family: var(--font-body);
+            font-style: italic;
+            font-size: .88rem;
+            color: var(--ink-faded);
+            line-height: 1.8;
+            max-width: 420px;
+            margin: 0 auto 1.5rem;
+        }
+
+        .footer-ornament {
+            color: var(--rule);
+            letter-spacing: .6em;
+            font-size: 1rem;
+            margin-bottom: .8rem;
+        }
+
+        .footer-text {
+            font-size: .65rem;
+            letter-spacing: .25em;
+            text-transform: uppercase;
+            color: var(--ink-faded);
+        }
+
+        .footer-text+.footer-text {
+            margin-top: .3rem;
+        }
+
+        /* ==========================================================
+           ANIMATIONS
+        ========================================================== */
+        @keyframes fadeDown {
+            from {
+                opacity: 0;
+                transform: translateY(-16px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Intersection Observer fallback: cards animate on scroll */
+        .staff-card,
+        .quick-link,
+        .editorial-panel,
+        .edition-card {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .staff-card.visible,
+        .quick-link.visible,
+        .editorial-panel.visible,
+        .edition-card.visible {
+            animation: fadeUp .6s ease-out forwards;
+        }
+
+        .staff-card:nth-child(1).visible {
+            animation-delay: 0s;
+        }
+
+        .staff-card:nth-child(2).visible {
+            animation-delay: .1s;
+        }
+
+        .staff-card:nth-child(3).visible {
+            animation-delay: .2s;
+        }
+
+        .staff-card:nth-child(4).visible {
+            animation-delay: .3s;
+        }
+
+        .staff-card:nth-child(5).visible {
+            animation-delay: .4s;
+        }
+
+        /* ==========================================================
+           SUBSCRIBE MODAL (Overlay)
+        ========================================================== */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 200;
+            background: rgba(10, 6, 2, .85);
+            backdrop-filter: blur(6px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .4s ease;
+        }
+
+        .modal-overlay.open {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .modal {
+            background: var(--parchment);
+            color: var(--ink);
+            padding: 2.5rem 3rem;
+            max-width: 440px;
+            width: 90%;
+            position: relative;
+            text-align: center;
+            transform: scale(.92);
+            transition: transform .4s ease;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, .6);
+        }
+
+        .modal-overlay.open .modal {
+            transform: scale(1);
+        }
+
+        .modal::before {
+            content: '';
+            position: absolute;
+            inset: 7px;
+            border: 1px solid var(--parchment-alt);
+            pointer-events: none;
+        }
+
+        .modal-title {
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            letter-spacing: .08em;
+            margin-bottom: .5rem;
+        }
+
+        .modal-text {
+            font-family: var(--font-body);
+            font-size: .85rem;
+            color: var(--ink-light);
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-price {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            color: var(--red-ink);
+            margin-bottom: .3rem;
+        }
+
+        .modal-price-label {
+            font-size: .72rem;
+            color: var(--ink-faded);
+            letter-spacing: .15em;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-close {
+            font-family: var(--font-body);
+            font-size: .78rem;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            background: none;
+            border: 1px solid var(--rule);
+            color: var(--ink);
+            padding: .5rem 1.8rem;
+            cursor: pointer;
+            transition: all var(--transition);
+        }
+
+        .modal-close:hover {
+            border-color: var(--red-ink);
+            color: var(--red-ink);
+        }
+
+        /* ==========================================================
+           RESPONSIVE
+        ========================================================== */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 0 1.2rem;
+            }
+
+            .navbar-links {
+                position: fixed;
+                top: var(--nav-height);
+                left: 0;
+                right: 0;
+                background: var(--bg-dark);
+                border-bottom: 1px solid var(--rule);
+                flex-direction: column;
+                padding: 1rem 0;
+                gap: 0;
+                transform: translateY(-110%);
+                transition: transform .35s ease;
+            }
+
+            .navbar-links.open {
+                transform: translateY(0);
+            }
+
+            .navbar-toggle {
+                display: flex;
+            }
+
+            .btn-subscribe {
+                margin: .8rem 1rem 0;
+                width: calc(100% - 2rem);
+                text-align: center;
+            }
+
+            .hero-title {
+                font-size: 2.6rem;
+            }
+
+            .staff-card.featured {
+                grid-template-columns: 1fr;
+            }
+
+            .featured-ornament {
+                display: none;
+            }
+
+            .section {
+                padding: 3rem 1.2rem;
+            }
+
+            .editorial-panel {
+                padding: 1.8rem 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            html {
+                font-size: 15px;
+            }
+
+            .hero {
+                padding: 3.5rem 1.2rem 3rem;
+                min-height: 55vh;
+            }
+
+            .hero-title {
+                font-size: 2rem;
+                letter-spacing: .06em;
+            }
+
+            .staff-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ==============================================================
+         NAVBAR
+    ============================================================== -->
+    <nav class="navbar" id="navbar" role="navigation" aria-label="Navigation principale">
+        <a href="#" class="navbar-logo" id="nav-logo">La Gazette de la Serre</a>
+
+        <button class="navbar-toggle" id="nav-toggle" aria-label="Ouvrir le menu" aria-expanded="false">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <ul class="navbar-links" id="nav-links">
+            <li><a href="#hero" class="nav-link active" id="link-accueil">Accueil</a></li>
+            <li><a href="#les-editions" class="nav-link" id="link-editions">Les Éditions</a></li>
+            <li><a href="#archives" class="nav-link" id="link-archives">Archives Clandestines</a></li>
+            <li><a href="#redaction" class="nav-link" id="link-staff">La Machinerie</a></li>
+            <li>
+                <button class="btn-subscribe" id="btn-subscribe" type="button">
+                    <span>S'abonner — 100 Francs</span>
+                </button>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- ==============================================================
+         HERO SECTION — MANCHETTE
+    ============================================================== -->
+    <header class="hero" id="hero">
+        <p class="hero-ornament-top">Journal parisien indépendant — Fondé en l'an 1869</p>
+        <h1 class="hero-title">Gazette<br>de la Serre</h1>
+        <p class="hero-subtitle">Maison de la Serre</p>
+        <hr class="hero-rule">
+        <p class="hero-tagline">
+            «&nbsp;<em>Car informer n'est pas choisir un camp.
+                Informer, c'est donner les moyens de choisir en conscience. »</em><br>&nbsp;
+        </p>
+        <a href="#editorial" class="hero-cta" id="cta-decouvrir">
+            Découvrir la rédaction <span class="arrow">→</span>
+        </a>
+    </header>
+
+    <!-- ==============================================================
+         RACCOURCIS RAPIDES
+    ============================================================== -->
+    <section class="section" id="editions" aria-label="Raccourcis">
+        <div class="section-header">
+            <p class="section-label">Nos Rubriques</p>
+            <h2 class="section-title">Le Kiosque</h2>
+            <hr class="section-rule">
+        </div>
+
+        <div class="quick-links">
+            <a href="editions/edition-1.html" class="quick-link" id="ql-derniere">
+                <div class="quick-link-icon">✦</div>
+                <div>
+                    <div class="quick-link-label">Dernière Édition</div>
+                    <div class="quick-link-sub">Le numéro le plus récent de la Gazette</div>
+                </div>
+            </a>
+            <a href="#les-editions" class="quick-link" id="ql-editions">
+                <div class="quick-link-icon">❧</div>
+                <div>
+                    <div class="quick-link-label">Les Éditions</div>
+                    <div class="quick-link-sub">Tous les numéros publiés à ce jour</div>
+                </div>
+            </a>
+            <a href="#" class="quick-link" id="ql-archives" aria-label="Archives Clandestines">
+                <div class="quick-link-icon">⚿</div>
+                <div>
+                    <div class="quick-link-label" id="archives">Archives Clandestines</div>
+                    <div class="quick-link-sub">Documents confidentiels et enquêtes secrètes</div>
+                </div>
+            </a>
+            <a href="#redaction" class="quick-link" id="ql-machinerie">
+                <div class="quick-link-icon">⚙</div>
+                <div>
+                    <div class="quick-link-label">La Machinerie</div>
+                    <div class="quick-link-sub">L'équipe qui fait tourner les presses</div>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <!-- ==============================================================
+         LES ÉDITIONS — CARTES-JOURNAL
+    ============================================================== -->
+    <section class="section" id="les-editions" aria-label="Les Éditions">
+        <div class="section-header">
+            <p class="section-label">Nos Publications</p>
+            <h2 class="section-title">Les Éditions</h2>
+            <hr class="section-rule">
+        </div>
+
+        <div class="editions-grid">
+
+            <!-- ÉDITION N°1 -->
+            <a href="editions/edition-1.html" class="edition-card" id="edition-1" tabindex="0">
+                <div class="edition-card-img">
+                    <img src="page_de_garde.jpg" alt="Page de garde — N° 824, 2 Mars 1869" loading="lazy">
+                    <span class="edition-badge">Nouveau</span>
+                </div>
+                <div class="edition-card-body">
+                    <h3 class="edition-card-title">La Balle et la Croix</h3>
+                    <p class="edition-card-date">2 Mars 1869 — N° 824</p>
+                    <p class="edition-card-summary">
+                        Le diacre Gérard Lacroix, blessé d'une balle républicaine devant Saint-Sulpice, prononce une
+                        parole qui traverse Paris entier. Enquête, témoignages et éditorial — le premier numéro de la
+                        Gazette.
+                    </p>
+                    <span class="btn-read">Lire l'édition <span class="arrow">→</span></span>
+                </div>
+            </a>
+
+        </div>
+    </section>
+
+    <!-- ==============================================================
+         PRÉSENTATION ÉDITORIALE
+    ============================================================== -->
+    <section class="section" id="editorial" aria-label="Ligne éditoriale">
+        <div class="section-header">
+            <p class="section-label">Notre Engagement</p>
+            <h2 class="section-title">Ligne Éditoriale</h2>
+            <hr class="section-rule">
+        </div>
+
+        <article class="editorial-panel">
+            <p class="editorial-label">De l'exigence d'impartialité en notre temps</p>
+
+            <p class="editorial-text drop-cap">La Gazette de la Serre est un journal parisien indépendant, fondé sur un
+                principe simple mais exigeant&nbsp;, informer impartialement. Détachée de toute mouvance partisane, elle
+                ne revendique ni allégeance politique, ni engagement idéologique. Sa ligne éditoriale repose sur la
+                rigueur, la vérification des faits et l'exigence d'équilibre.</p>
+
+            <p class="editorial-text">La Gazette s'attache à offrir à ses lecteurs une vision précise et impartiale des
+                réalités&nbsp;, Diplomatiques, Politiques, Militaires et Citoyennes. Chaque publication vise à éclairer,
+                analyser et exposer sans juger. Là où d'autres cherchent à convaincre, La Gazette de la Serre cherche à
+                comprendre et à faire comprendre.</p>
+
+            <p class="editorial-text">Dans une capitale où l'opinion fluctue au rythme des intérêts, elle s'impose comme
+                un espace de constance, où la plume se veut libre, mesurée et responsable.</p>
+
+            <p class="editorial-closing">
+                Car informer n'est pas choisir un camp.<br>
+                Informer, c'est donner les moyens de choisir en conscience.
+            </p>
+        </article>
+    </section>
+
+    <!-- ==============================================================
+         LA RÉDACTION — CARTES INTERACTIVES
+    ============================================================== -->
+    <section class="section" id="redaction" aria-label="La Rédaction">
+        <div class="section-header">
+            <p class="section-label">Les âmes dévouées à l'ouvrage</p>
+            <h2 class="section-title">La Rédaction</h2>
+            <hr class="section-rule">
+        </div>
+
+        <div class="staff-grid">
+
+            <!-- DIRECTEUR — Carte mise en avant -->
+            <article class="staff-card featured" id="card-directeur" tabindex="0" role="button"
+                aria-label="Fiche de Louis-Philippe de la Serre, Directeur">
+                <div class="featured-ornament">
+                    <span class="featured-initial">L</span>
+                </div>
+                <div class="featured-body">
+                    <p class="card-role">Directeur</p>
+                    <h3 class="card-name">Louis-Philippe de la Serre</h3>
+                    <hr class="card-rule">
+                    <p class="card-desc">Homme de vision plus que d'exécution, M.&nbsp;de la Serre préside aux destinées
+                        de cette gazette avec un art consommé de la direction&nbsp;— lequel consiste, selon ses propres
+                        termes, à «&nbsp;savoir s'entourer de gens qui travaillent mieux que soi&nbsp;». Rarement aperçu
+                        dans les bureaux de la rédaction avant midi, il gouverne depuis les profondeurs capitonnées de
+                        son salon particulier, où l'on assure que les décisions les plus lumineuses lui viennent entre
+                        deux tasses de thé et une partie de whist. Son génie, car il faut bien l'appeler ainsi, réside
+                        dans cette faculté miraculeuse de déléguer chaque tâche à la personne la plus compétente, si
+                        bien que le journal fonctionne avec une précision d'horloge&nbsp;— sans que quiconque puisse
+                        affirmer l'y avoir vu contribuer de ses mains. Le succès de la <em>Gazette</em> est la preuve,
+                        s'il en fallait une, que la paresse élevée au rang de méthode produit parfois des résultats que
+                        l'acharnement envie.</p>
+                </div>
+            </article>
+
+            <!-- RÉDACTEUR EN CHEF -->
+            <article class="staff-card" id="card-redacteur" tabindex="0" role="button"
+                aria-label="Fiche de Louis de la Serre, Rédacteur en Chef">
+                <p class="card-role">Rédacteur en Chef</p>
+                <h3 class="card-name">Louis de la Serre</h3>
+                <hr class="card-rule">
+                <p class="card-desc"><span class="card-initial">S</span>i la <em>Gazette de la Serre</em> possède une
+                    âme, c'est assurément celle de M.&nbsp;Louis de la Serre. Plume infatigable et gardien jaloux de la
+                    syntaxe, il porte sur ses épaules le poids véritable de chaque numéro. C'est sous sa direction que
+                    les mots trouvent leur juste mesure, que les phrases épousent l'élégance et que les articles
+                    acquièrent cette rigueur qui fait la réputation de notre feuille. Homme de lettres dans
+                    l'acceptation la plus noble du terme, il consacre ses jours et nombre de ses nuits à l'ouvrage,
+                    veillant à ce que chaque ligne publiée soit digne de l'exigence que le journal s'est fixée. On dit
+                    de lui qu'il corrige en dormant&nbsp;, ce qui supposerait toutefois qu'il dormît.</p>
+            </article>
+
+            <!-- JOURNALISTE — Léopold -->
+            <article class="staff-card" id="card-vaillancourt" tabindex="0" role="button"
+                aria-label="Fiche de Léopold de Vaillancourt, Journaliste">
+                <p class="card-role">Journaliste</p>
+                <h3 class="card-name">Léopold de Vaillancourt</h3>
+                <hr class="card-rule">
+                <p class="card-desc"><span class="card-initial">M</span>onsieur de Vaillancourt est de ces hommes devant
+                    lesquels les bouches les plus closes finissent par s'ouvrir. Spécialiste des entretiens et des
+                    conversations de fond, il possède le talent redoutable de mettre ses interlocuteurs en confiance, si
+                    bien que les confidences coulent aussi naturellement qu'un bon bordeaux après le dessert. Des
+                    antichambres ministérielles aux salons mondains, son carnet ne désemplit jamais. Il interroge sans
+                    brusquer, écoute avec une patience d'orfèvre et, d'un mot placé au moment opportun, tire le fil qui
+                    démêle tout l'écheveau.</p>
+            </article>
+
+            <!-- JOURNALISTE — Lucien -->
+            <article class="staff-card" id="card-marthe" tabindex="0" role="button"
+                aria-label="Fiche de Lucien Marthe, Journaliste">
+                <p class="card-role">Journaliste</p>
+                <h3 class="card-name">Lucien Marthe</h3>
+                <hr class="card-rule">
+                <p class="card-desc"><span class="card-initial">L</span>à où M.&nbsp;de Vaillancourt opère dans les
+                    salons, M.&nbsp;Marthe arpente les rues. Infatigable reporter, il est de ceux que l'on croise aussi
+                    bien sur le pavé des Halles qu'aux abords de l'Assemblée, le regard vif et l'oreille aux aguets. Sa
+                    spécialité demeure l'interview de terrain&nbsp;: le témoignage brut, la confession arrachée entre
+                    deux portes, la parole de ceux que d'ordinaire l'on n'entend guère. Si un fait mérite d'être
+                    consigné, M.&nbsp;Marthe est déjà en chemin pour le recueillir.</p>
+            </article>
+
+            <!-- CHEF DE LA MACHINERIE -->
+            <article class="staff-card featured" id="card-machinerie" tabindex="0" role="button"
+                aria-label="Fiche de Jule Diurnus, Chef de la Machinerie">
+                <div class="featured-ornament">
+                    <span class="featured-initial">J</span>
+                </div>
+                <div class="featured-body">
+                    <p class="card-role">Chef de la Machinerie</p>
+                    <h3 class="card-name">Jule Diurnus</h3>
+                    <hr class="card-rule">
+                    <p class="card-desc"><span class="card-initial">D</span>errière chaque feuillet qui parvient aux
+                        mains
+                        du lecteur se cache l'œuvre silencieuse de M.&nbsp;Diurnus. Maître des presses et seigneur des
+                        rotatives, il règne sur l'imposant atelier mécanique de la <em>Gazette</em> avec l'autorité
+                        tranquille d'un chef d'orchestre dont les musiciens seraient de fonte et d'acier. Logisticien
+                        hors
+                        pair, il veille à l'approvisionnement en encre, à l'entretien des mécanismes et à la bonne
+                        marche de
+                        cette machinerie complexe sans laquelle nos plus belles phrases ne seraient que pensées perdues.
+                    </p>
+            </article>
+
+        </div>
+    </section>
+
+    <!-- ==============================================================
+         FOOTER
+    ============================================================== -->
+    <footer class="footer" id="footer">
+        <p class="footer-quote">
+            «&nbsp;La vérité n'appartient à personne&nbsp;;<br>
+            il revient à chacun d'aller la chercher.&nbsp;»
+        </p>
+        <p class="footer-ornament">✦</p>
+        <p class="footer-text">La Gazette de la Serre — Maison de la Serre — Paris</p>
+        <p class="footer-text">Tous droits réservés — MDCCCLXIX</p>
+    </footer>
+
+    <!-- ==============================================================
+         MODAL — S'ABONNER
+    ============================================================== -->
+    <div class="modal-overlay" id="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+        <div class="modal">
+            <h2 class="modal-title" id="modal-title">Abonnement à la Gazette</h2>
+            <p class="modal-text">
+                Recevez chaque édition de <em>La Gazette de la Serre</em> directement en votre demeure, portée par nos
+                coursiers les plus diligents.
+            </p>
+            <p class="modal-price">100 Francs</p>
+            <p class="modal-price-label">Par édition — livraison comprise</p>
+            <button class="modal-close" id="modal-close" type="button">Fermer</button>
+        </div>
+    </div>
+
+    <!-- ==============================================================
+         JAVASCRIPT — INTERACTIONS
+    ============================================================== -->
+    <script>
+        // --- Mobile Menu Toggle ---
+        const navToggle = document.getElementById('nav-toggle');
+        const navLinks = document.getElementById('nav-links');
+
+        navToggle.addEventListener('click', () => {
+            const open = navLinks.classList.toggle('open');
+            navToggle.setAttribute('aria-expanded', open);
+        });
+
+        // Close mobile menu on link click
+        navLinks.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('open');
+                navToggle.setAttribute('aria-expanded', 'false');
+            });
+        });
+
+        // --- Active link on scroll ---
+        const sections = document.querySelectorAll('section[id], header[id]');
+        const navLinkEls = document.querySelectorAll('.nav-link');
+
+        function updateActiveLink() {
+            let current = '';
+            sections.forEach(section => {
+                const top = section.offsetTop - 100;
+                if (scrollY >= top) current = section.id;
+            });
+
+            navLinkEls.forEach(link => {
+                link.classList.remove('active');
+                const href = link.getAttribute('href');
+                if (href && href.substring(1) === current) {
+                    link.classList.add('active');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', updateActiveLink, { passive: true });
+
+        // --- Subscribe Modal ---
+        const btnSubscribe = document.getElementById('btn-subscribe');
+        const modalOverlay = document.getElementById('modal-overlay');
+        const modalClose = document.getElementById('modal-close');
+
+        btnSubscribe.addEventListener('click', () => {
+            modalOverlay.classList.add('open');
+        });
+
+        modalClose.addEventListener('click', () => {
+            modalOverlay.classList.remove('open');
+        });
+
+        modalOverlay.addEventListener('click', (e) => {
+            if (e.target === modalOverlay) {
+                modalOverlay.classList.remove('open');
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                modalOverlay.classList.remove('open');
+            }
+        });
+
+        // --- Scroll Reveal (Intersection Observer) ---
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px 0px -60px 0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.staff-card, .quick-link, .editorial-panel, .edition-card')
+            .forEach(el => observer.observe(el));
+    </script>
+
+</body>
+
+</html>

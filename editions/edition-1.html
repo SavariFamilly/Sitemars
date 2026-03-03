@@ -1,0 +1,1411 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Gazette de la Serre — N° 824 — 2 Mars 1869</title>
+    <meta name="description"
+        content="La Balle et la Croix — Premier numéro de La Gazette de la Serre. L'attentat de Saint-Sulpice, la parole du diacre Lacroix.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=IM+Fell+Double+Pica:ital@0;1&family=IM+Fell+English:ital@0;1&display=swap"
+        rel="stylesheet">
+    <style>
+        /* ============================================
+           CSS VARIABLES — HARMONISÉES AVEC LE HUB
+        ============================================ */
+        :root {
+            /* Hub shared tokens */
+            --bg-dark: #0e0a04;
+            --bg-panel: rgba(22, 14, 6, .6);
+            --parchment: #ede0c0;
+            --parchment-alt: #d5c49a;
+            --ink: #160e04;
+            --ink-faded: #3d2b10;
+            --ink-light: #5a431c;
+            --gold: #b8942e;
+            --gold-dim: rgba(184, 148, 46, .35);
+            --gold-bright: #d4af37;
+            --red-ink: #8b1a1a;
+            --rule: rgba(184, 148, 46, .18);
+            --rule-light: rgba(184, 148, 46, .08);
+            --font-display: 'IM Fell Double Pica', serif;
+            --font-body: 'IM Fell English', serif;
+            --nav-height: 64px;
+            --transition: .3s ease;
+
+            /* Newspaper-specific tokens */
+            --paper: #ede0c0;
+            --paper-dark: #d5c49a;
+            --red: #8b1a1a;
+            --rule-news: #2a1a05;
+            --gold-news: #8b6914;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: 17px;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--bg-dark);
+            background-image: radial-gradient(ellipse at 40% 30%, #2e1e0a 0%, #0a0602 80%);
+            color: var(--parchment);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* ============================================
+           NAVBAR — IDENTIQUE AU HUB
+        ============================================ */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            height: var(--nav-height);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2rem;
+            background: rgba(14, 10, 4, .92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--rule);
+        }
+
+        .navbar-logo {
+            font-family: var(--font-display);
+            font-size: 1.15rem;
+            letter-spacing: .08em;
+            color: var(--gold);
+            text-decoration: none;
+            transition: color var(--transition);
+        }
+
+        .navbar-logo:hover {
+            color: var(--gold-bright);
+        }
+
+        .navbar-links {
+            display: flex;
+            align-items: center;
+            gap: 0.2rem;
+            list-style: none;
+        }
+
+        .nav-link {
+            position: relative;
+            font-family: var(--font-body);
+            font-size: 0.82rem;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            color: var(--parchment-alt);
+            text-decoration: none;
+            padding: .5rem .9rem;
+            transition: color var(--transition);
+        }
+
+        .nav-link:hover {
+            color: var(--gold);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 1px;
+            background: var(--gold-dim);
+            transition: all var(--transition);
+        }
+
+        .nav-link:hover::after {
+            width: 70%;
+            left: 15%;
+        }
+
+        .navbar-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px;
+        }
+
+        .navbar-toggle span {
+            display: block;
+            width: 22px;
+            height: 2px;
+            background: var(--parchment);
+            transition: all var(--transition);
+        }
+
+        /* ============================================
+           BOUTON RETOUR
+        ============================================ */
+        .btn-back {
+            display: inline-flex;
+            align-items: center;
+            gap: .5rem;
+            font-family: var(--font-body);
+            font-size: .82rem;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            color: var(--gold);
+            text-decoration: none;
+            padding: .7rem 1.5rem;
+            border: 1px solid var(--gold-dim);
+            background: var(--bg-panel);
+            transition: all var(--transition);
+            margin: calc(var(--nav-height) + 1.5rem) auto 1.5rem;
+        }
+
+        .btn-back:hover {
+            border-color: var(--gold);
+            background: rgba(184, 148, 46, .08);
+            transform: translateX(-4px);
+        }
+
+        .btn-back .arrow {
+            transition: transform var(--transition);
+        }
+
+        .btn-back:hover .arrow {
+            transform: translateX(-4px);
+        }
+
+        .btn-back-bottom {
+            display: inline-flex;
+            align-items: center;
+            gap: .5rem;
+            font-family: var(--font-body);
+            font-size: .82rem;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            color: var(--gold);
+            text-decoration: none;
+            padding: .7rem 1.5rem;
+            border: 1px solid var(--gold-dim);
+            background: var(--bg-panel);
+            transition: all var(--transition);
+            margin: 2rem auto;
+        }
+
+        .btn-back-bottom:hover {
+            border-color: var(--gold);
+            background: rgba(184, 148, 46, .08);
+            transform: translateX(-4px);
+        }
+
+        .btn-back-bottom .arrow {
+            transition: transform var(--transition);
+        }
+
+        .btn-back-bottom:hover .arrow {
+            transform: translateX(-4px);
+        }
+
+        /* ============================================
+           JOURNAL — STYLES DU PARCHEMIN
+        ============================================ */
+        .newspaper {
+            width: 920px;
+            max-width: calc(100% - 20px);
+            background: var(--paper);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, .5), 0 16px 60px rgba(0, 0, 0, .75), inset 0 0 120px rgba(90, 60, 10, .1);
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 0;
+        }
+
+        .newspaper::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at 15% 8%, rgba(160, 120, 40, .14) 0%, transparent 55%),
+                radial-gradient(ellipse at 85% 92%, rgba(110, 70, 15, .18) 0%, transparent 45%);
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .page-border-outer {
+            margin: 10px;
+            position: relative;
+            padding: 6px;
+            box-shadow: inset 0 0 0 3px var(--rule-news), inset 0 0 0 5px var(--paper), inset 0 0 0 7px var(--rule-news), inset 0 0 0 9px var(--paper-dark), inset 0 0 0 11px var(--rule-news);
+        }
+
+        .page-border-outer::before,
+        .page-border-outer::after {
+            content: '✦';
+            position: absolute;
+            font-size: 14px;
+            color: var(--gold-news);
+            background: var(--paper);
+            padding: 2px 4px;
+            z-index: 5;
+        }
+
+        .page-border-outer::before {
+            top: 3px;
+            left: 3px;
+        }
+
+        .page-border-outer::after {
+            bottom: 3px;
+            right: 3px;
+        }
+
+        .corner-tr,
+        .corner-bl {
+            position: absolute;
+            font-size: 14px;
+            color: var(--gold-news);
+            background: var(--paper);
+            padding: 2px 4px;
+            z-index: 5;
+        }
+
+        .corner-tr {
+            top: 3px;
+            right: 3px;
+        }
+
+        .corner-bl {
+            bottom: 3px;
+            left: 3px;
+        }
+
+        .page-border-inner {
+            border: 1px solid var(--rule-news);
+            margin: 14px;
+            padding: 10px 20px 20px;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 6px 0 8px;
+        }
+
+        .header-top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 8px;
+            letter-spacing: .1em;
+            color: var(--ink-faded);
+            padding: 0 4px 4px;
+            border-bottom: 1px solid var(--rule-news);
+            margin-bottom: 6px;
+        }
+
+        .header-top-left,
+        .header-top-right {
+            flex: 1;
+            font-family: var(--font-body);
+        }
+
+        .header-top-right {
+            text-align: right;
+        }
+
+        .header-motto {
+            flex: 2;
+            text-align: center;
+            font-family: var(--font-body);
+            font-style: italic;
+            font-size: 9px;
+            color: var(--ink-faded);
+            border-left: 1px solid var(--rule-news);
+            border-right: 1px solid var(--rule-news);
+            padding: 0 10px;
+        }
+
+        .masthead {
+            font-family: var(--font-display);
+            font-size: 72px;
+            line-height: .95;
+            color: var(--ink);
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+            display: block;
+            text-align: center;
+        }
+
+        .masthead-fondateur {
+            font-family: var(--font-body);
+            font-size: 13px;
+            color: var(--ink-faded);
+            letter-spacing: .18em;
+            margin-bottom: 5px;
+            text-align: center;
+        }
+
+        .masthead-fondateur em {
+            font-style: italic;
+            color: var(--ink);
+        }
+
+        .masthead-tagline {
+            font-family: var(--font-body);
+            font-style: italic;
+            font-size: 13px;
+            color: var(--ink);
+            border-top: 1px solid var(--rule-news);
+            border-bottom: 1px solid var(--rule-news);
+            padding: 3px 0;
+            margin: 0 40px;
+            letter-spacing: .1em;
+        }
+
+        .header-info-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 6px;
+            padding-top: 4px;
+            border-top: 1px solid var(--rule-news);
+            font-size: 8.5px;
+            color: var(--ink-faded);
+            letter-spacing: .08em;
+            font-family: var(--font-body);
+        }
+
+        .price-box {
+            border: 1px double var(--rule-news);
+            padding: 3px 12px;
+            font-size: 8.5px;
+            letter-spacing: .15em;
+            background: rgba(42, 26, 5, .04);
+        }
+
+        /* Alert Banner */
+        .alert-banner {
+            background: var(--red);
+            color: var(--paper);
+            text-align: center;
+            padding: 6px 16px;
+            margin: 4px 0 8px;
+            font-family: var(--font-display);
+            font-size: 12px;
+            letter-spacing: .22em;
+            text-transform: uppercase;
+            border-top: 2px solid var(--gold-news);
+            border-bottom: 2px solid var(--gold-news);
+        }
+
+        /* Lead Section */
+        .lead-section {
+            border-top: 5px double var(--red);
+            border-bottom: 3px solid var(--red);
+            padding: 12px 0 10px;
+            margin: 8px 0;
+            text-align: center;
+            background: rgba(139, 26, 26, .03);
+        }
+
+        .lead-kicker {
+            font-size: 9px;
+            letter-spacing: .3em;
+            text-transform: uppercase;
+            color: var(--red);
+            font-family: var(--font-body);
+            margin-bottom: 4px;
+        }
+
+        .lead-title {
+            font-family: var(--font-display);
+            font-size: 42px;
+            line-height: 1.05;
+            color: var(--ink);
+            text-transform: uppercase;
+            letter-spacing: .04em;
+            margin-bottom: 6px;
+        }
+
+        .lead-title-red {
+            color: var(--red);
+        }
+
+        .lead-subtitle {
+            font-family: var(--font-body);
+            font-style: italic;
+            font-size: 14px;
+            color: var(--ink-faded);
+            margin-bottom: 8px;
+            line-height: 1.55;
+        }
+
+        .lead-rule {
+            width: 60%;
+            margin: 6px auto;
+            border: none;
+            border-top: 1px solid var(--rule-news);
+        }
+
+        .lead-summary {
+            font-family: var(--font-body);
+            font-size: 11.5px;
+            line-height: 1.7;
+            color: var(--ink);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Great Quote */
+        .great-quote {
+            border: 3px double var(--red);
+            padding: 18px 30px;
+            margin: 10px auto;
+            max-width: 700px;
+            text-align: center;
+            background: rgba(139, 26, 26, .04);
+        }
+
+        .great-quote-text {
+            font-family: var(--font-display);
+            font-style: italic;
+            font-size: 22px;
+            line-height: 1.4;
+            color: var(--ink);
+            margin-bottom: 8px;
+        }
+
+        .great-quote-attr {
+            font-family: var(--font-body);
+            font-size: 9px;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            color: var(--ink-faded);
+        }
+
+        /* Columns */
+        .content-3col {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 0;
+            margin-top: 10px;
+        }
+
+        .content-2col {
+            display: grid;
+            grid-template-columns: 3fr 2fr;
+            gap: 0;
+            border-top: 2px solid var(--rule-news);
+            margin-top: 12px;
+        }
+
+        .col {
+            padding: 0 14px;
+            border-right: 1px solid var(--rule-news);
+        }
+
+        .col:last-child {
+            border-right: none;
+            padding-right: 0;
+        }
+
+        .col:first-child {
+            padding-left: 0;
+        }
+
+        .col-left {
+            padding: 8px 14px 0 0;
+            border-right: 1px solid var(--rule-news);
+        }
+
+        .col-right {
+            padding: 8px 0 0 14px;
+        }
+
+        /* Articles */
+        article {
+            margin-bottom: 14px;
+        }
+
+        .article-title {
+            font-family: var(--font-display);
+            font-size: 17px;
+            line-height: 1.2;
+            color: var(--ink);
+            text-align: center;
+            margin-bottom: 3px;
+            text-transform: uppercase;
+            letter-spacing: .04em;
+        }
+
+        .article-subtitle {
+            font-family: var(--font-body);
+            font-style: italic;
+            font-size: 10.5px;
+            color: var(--ink-faded);
+            text-align: center;
+            margin-bottom: 5px;
+            line-height: 1.4;
+        }
+
+        .article-rule {
+            width: 45%;
+            margin: 4px auto 5px;
+            border: none;
+            border-top: 1px solid var(--rule-news);
+            display: block;
+        }
+
+        .article-byline {
+            font-size: 8px;
+            text-align: center;
+            color: var(--ink-faded);
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+            font-family: var(--font-body);
+        }
+
+        .article-text {
+            font-family: var(--font-body);
+            font-size: 10px;
+            line-height: 1.72;
+            color: var(--ink);
+            text-align: justify;
+            hyphens: auto;
+        }
+
+        .article-text p {
+            text-indent: 1.2em;
+            margin-bottom: 3px;
+        }
+
+        .article-text p:first-child {
+            text-indent: 0;
+        }
+
+        .drop-cap p:first-child::first-letter {
+            font-family: var(--font-display);
+            font-size: 40px;
+            float: left;
+            line-height: .78;
+            margin: 3px 5px 0 0;
+            color: var(--ink);
+        }
+
+        /* Section Heads */
+        .section-head {
+            font-family: var(--font-display);
+            font-size: 12px;
+            text-align: center;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            color: var(--ink);
+            border-top: 2px solid var(--rule-news);
+            border-bottom: 1px solid var(--rule-news);
+            padding: 3px 0;
+            margin: 10px 0 8px;
+        }
+
+        /* Banners */
+        .impartiality-banner {
+            background: var(--ink);
+            color: var(--paper);
+            text-align: center;
+            padding: 6px 12px;
+            margin: 6px 0;
+            border-top: 2px solid var(--gold-news);
+            border-bottom: 2px solid var(--gold-news);
+            font-family: var(--font-body);
+            font-style: italic;
+            font-size: 10.5px;
+            letter-spacing: .08em;
+            line-height: 1.5;
+        }
+
+        .impartiality-banner strong {
+            font-style: normal;
+            font-size: 12px;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+        }
+
+        /* Pull Quote */
+        .pull-quote {
+            border-top: 2px solid var(--rule-news);
+            border-bottom: 2px solid var(--rule-news);
+            padding: 7px 12px;
+            margin: 8px 0;
+            font-family: var(--font-display);
+            font-style: italic;
+            font-size: 11.5px;
+            text-align: center;
+            line-height: 1.45;
+            color: var(--ink);
+        }
+
+        /* Voice boxes */
+        .voice-box {
+            border: 1px solid var(--rule-news);
+            padding: 7px 9px;
+            margin: 6px 0;
+        }
+
+        .voice-label {
+            font-family: var(--font-display);
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: .15em;
+            margin-bottom: 4px;
+            color: var(--red);
+        }
+
+        .voice-text {
+            font-family: var(--font-body);
+            font-style: italic;
+            font-size: 9.5px;
+            line-height: 1.55;
+            color: var(--ink-faded);
+        }
+
+        /* Ornaments */
+        .ornament {
+            text-align: center;
+            font-size: 12px;
+            color: var(--ink-faded);
+            margin: 7px 0;
+            letter-spacing: 5px;
+        }
+
+        /* Ads */
+        .ad {
+            border: 1px solid var(--ink-faded);
+            padding: 7px 9px;
+            margin: 6px 0;
+            text-align: center;
+            background: rgba(0, 0, 0, .025);
+        }
+
+        .ad-title {
+            font-family: var(--font-display);
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+            margin-bottom: 3px;
+        }
+
+        .ad-text {
+            font-size: 8.5px;
+            font-family: var(--font-body);
+            font-style: italic;
+            line-height: 1.5;
+            color: var(--ink-faded);
+        }
+
+        /* Footer newspaper */
+        .news-footer {
+            border-top: 3px double var(--rule-news);
+            border-bottom: 1px solid var(--rule-news);
+            margin-top: 14px;
+            padding: 5px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 7.5px;
+            color: var(--ink-faded);
+            letter-spacing: .12em;
+            font-family: var(--font-body);
+            white-space: nowrap;
+            gap: 10px;
+        }
+
+        .news-footer span {
+            flex: 1;
+        }
+
+        .news-footer span:first-child {
+            text-align: left;
+        }
+
+        .news-footer span:last-child {
+            text-align: right;
+        }
+
+        .news-footer .footer-center {
+            flex: 0 0 auto;
+            text-align: center;
+            font-family: var(--font-display);
+            font-size: 10px;
+            letter-spacing: .25em;
+            color: var(--ink);
+            text-transform: uppercase;
+        }
+
+        /* Spine */
+        .spine {
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 46px;
+            background: var(--ink);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            padding: 18px 0;
+            z-index: 20;
+            box-shadow: inset -2px 0 6px rgba(0, 0, 0, .4);
+        }
+
+        .spine::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            bottom: 10px;
+            left: 5px;
+            right: 5px;
+            border-left: 1px solid rgba(240, 224, 192, .15);
+            border-right: 1px solid rgba(240, 224, 192, .15);
+        }
+
+        .spine-text {
+            writing-mode: vertical-rl;
+            transform: rotate(180deg);
+            font-family: var(--font-body);
+            font-style: italic;
+            color: var(--paper);
+            font-size: 13px;
+            letter-spacing: 6px;
+            white-space: nowrap;
+        }
+
+        .spine-middle {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .spine-rule-h {
+            width: 28px;
+            height: 1px;
+            background: rgba(240, 224, 192, .3);
+        }
+
+        .spine-ornament {
+            color: var(--gold-news);
+            font-size: 11px;
+        }
+
+        .spine-date {
+            writing-mode: vertical-rl;
+            transform: rotate(180deg);
+            font-family: var(--font-body);
+            font-size: 13px;
+            color: var(--paper);
+            letter-spacing: 6px;
+            white-space: nowrap;
+            font-style: italic;
+        }
+
+        .newspaper-inner {
+            margin-left: 46px;
+        }
+
+        /* Signature & misc */
+        .signature-block {
+            text-align: right;
+            margin-top: 6px;
+            padding-top: 4px;
+        }
+
+        .signature-img {
+            width: 190px;
+            opacity: 0.85;
+            filter: contrast(1.15);
+            mix-blend-mode: multiply;
+        }
+
+        .witness-box {
+            border: 2px solid var(--red);
+            padding: 8px 10px;
+            margin: 8px 0;
+            background: rgba(139, 26, 26, .04);
+        }
+
+        .witness-title {
+            font-family: var(--font-display);
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: .18em;
+            color: var(--red);
+            text-align: center;
+            margin-bottom: 5px;
+        }
+
+        .witness-text {
+            font-family: var(--font-body);
+            font-style: italic;
+            font-size: 9.5px;
+            line-height: 1.6;
+            color: var(--ink-faded);
+        }
+
+        /* ============================================
+           SITE FOOTER — HARMONISÉ AVEC LE HUB
+        ============================================ */
+        .site-footer {
+            text-align: center;
+            padding: 2rem 2rem 1.5rem;
+            border-top: 1px solid var(--rule-light);
+            width: 100%;
+            max-width: 920px;
+        }
+
+        .site-footer-ornament {
+            color: var(--rule);
+            letter-spacing: .6em;
+            font-size: 1rem;
+            margin-bottom: .5rem;
+        }
+
+        .site-footer-text {
+            font-size: .65rem;
+            letter-spacing: .25em;
+            text-transform: uppercase;
+            color: var(--ink-faded);
+        }
+
+        .site-footer-text+.site-footer-text {
+            margin-top: .3rem;
+        }
+
+        /* ============================================
+           RESPONSIVE
+        ============================================ */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 0 1.2rem;
+            }
+
+            .navbar-links {
+                position: fixed;
+                top: var(--nav-height);
+                left: 0;
+                right: 0;
+                background: var(--bg-dark);
+                border-bottom: 1px solid var(--rule);
+                flex-direction: column;
+                padding: 1rem 0;
+                gap: 0;
+                transform: translateY(-110%);
+                transition: transform .35s ease;
+            }
+
+            .navbar-links.open {
+                transform: translateY(0);
+            }
+
+            .navbar-toggle {
+                display: flex;
+            }
+
+            .newspaper {
+                width: 100%;
+            }
+
+            .masthead {
+                font-size: 36px;
+                letter-spacing: 2px;
+            }
+
+            .lead-title {
+                font-size: 28px;
+            }
+
+            .content-3col {
+                grid-template-columns: 1fr;
+            }
+
+            .content-2col {
+                grid-template-columns: 1fr;
+            }
+
+            .col {
+                border-right: none;
+                border-bottom: 1px solid var(--rule-news);
+                padding: 8px 0;
+            }
+
+            .col:last-child {
+                border-bottom: none;
+            }
+
+            .col-left {
+                border-right: none;
+                border-bottom: 1px solid var(--rule-news);
+                padding: 8px 0;
+            }
+
+            .col-right {
+                padding: 8px 0 0;
+            }
+
+            .spine {
+                display: none;
+            }
+
+            .newspaper-inner {
+                margin-left: 0;
+            }
+
+            .great-quote {
+                padding: 12px 16px;
+            }
+
+            .great-quote-text {
+                font-size: 18px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            html {
+                font-size: 15px;
+            }
+
+            .masthead {
+                font-size: 28px;
+            }
+
+            .lead-title {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar" id="navbar" role="navigation" aria-label="Navigation principale">
+        <a href="../index.html" class="navbar-logo">La Gazette de la Serre</a>
+
+        <button class="navbar-toggle" id="nav-toggle" aria-label="Ouvrir le menu" aria-expanded="false">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <ul class="navbar-links" id="nav-links">
+            <li><a href="../index.html" class="nav-link">Accueil</a></li>
+            <li><a href="../index.html#les-editions" class="nav-link active">Les Éditions</a></li>
+            <li><a href="../index.html#archives" class="nav-link">Archives Clandestines</a></li>
+            <li><a href="../index.html#redaction" class="nav-link">La Machinerie</a></li>
+        </ul>
+    </nav>
+
+    <!-- BOUTON RETOUR — HAUT -->
+    <a href="../index.html#les-editions" class="btn-back" id="btn-back-top">
+        <span class="arrow">←</span> Retour au kiosque
+    </a>
+
+    <!-- ============================================================
+         LE JOURNAL
+    ============================================================ -->
+    <div class="newspaper">
+        <div class="spine">
+            <div class="spine-text">Gazette de la Serre</div>
+            <div class="spine-middle">
+                <div class="spine-rule-h"></div>
+                <div class="spine-ornament">⚜</div>
+                <div class="spine-rule-h"></div>
+            </div>
+            <div class="spine-date">2 Mars 1869</div>
+        </div>
+        <div class="newspaper-inner">
+            <div class="page-border-outer">
+                <div class="corner-tr">✦</div>
+                <div class="corner-bl">✦</div>
+                <div class="page-border-inner">
+
+                    <div class="header">
+                        <div class="header-top-bar">
+                            <div class="header-top-left">Fondée en 1851 — Rédaction : 4, Rue de la Paix, Paris</div>
+                            <div class="header-motto">« Point de passion, point de parti — la vérité seule nous guide »
+                            </div>
+                            <div class="header-top-right">Abonnement annuel : 18 fr. — Numéro : 10 centimes</div>
+                        </div>
+                        <span class="masthead">La Gazette de la Serre</span>
+                        <div class="masthead-fondateur">Fondée par <em>Édouard-Hippolyte Carré de la Serre</em> —
+                            paraissant chaque lundi</div>
+                        <div class="masthead-tagline">Journal indépendant des affaires politiques, économiques et
+                            littéraires de la France</div>
+                        <div class="header-info-bar">
+                            <span>N° 824</span>
+                            <div class="price-box">DIX CENTIMES</div>
+                            <span>LUNDI 2 MARS 1869</span>
+                            <div class="price-box">ANNÉE XVIII</div>
+                            <span style="text-align:right;">Paris — Édition du lundi</span>
+                        </div>
+                    </div>
+
+                    <div class="alert-banner">✝ Attentat sacrilège — Un serviteur de Dieu blessé d'une balle
+                        républicaine ✝</div>
+
+                    <div class="lead-section">
+                        <div class="lead-kicker">✦ Crime &amp; Impiété — Paris en deuil ✦</div>
+                        <div class="lead-title">La Balle et <span class="lead-title-red">la Croix</span></div>
+                        <div class="lead-subtitle">
+                            Le Révérend Gérard Lacroix, diacre de Saint-Sulpice, touché à l'épaule par un militant au
+                            brassard bleu<br>
+                            alors qu'il quittait les vêpres — ses paroles, dites depuis son lit de douleur, ont
+                            bouleversé Paris entier
+                        </div>
+                        <hr class="lead-rule">
+                        <div class="lead-summary">
+                            Vendredi 28 février, au sortir des vêpres de Saint-Sulpice, le diacre Gérard Lacroix fut
+                            blessé d'une balle tirée à bout portant par un homme portant le brassard bleu des milices
+                            républicaines. Transporté à l'infirmerie de l'abbaye, le diacre, reprenant connaissance,
+                            prononça devant témoins une parole qui traverse déjà Paris comme une flamme : <em>« Je ne
+                                suis que fils de Dieu — pourquoi cette balle m'a-t-elle atteint ? »</em> L'homme de foi
+                            blessé dans la chair interroge le ciel. Et Paris, lui, interroge ses propres démons.
+                        </div>
+                    </div>
+
+                    <!-- LA GRANDE CITATION -->
+                    <div class="great-quote">
+                        <div class="great-quote-text">« Je ne suis que fils de Dieu —<br>pourquoi cette balle m'a-t-elle
+                            atteint ? »</div>
+                        <div class="great-quote-attr">— Le Révérend Gérard Lacroix, diacre de Saint-Sulpice<br>prononcé
+                            depuis son lit d'infirmerie, vendredi 28 février 1869, au soir</div>
+                    </div>
+
+                    <div class="content-3col">
+
+                        <!-- COL 1 -->
+                        <div class="col drop-cap">
+                            <div class="article-title">L'Attentat de la Rue du Four</div>
+                            <div class="article-subtitle">Du coup de feu à la parole du diacre :<br>récit complet d'une
+                                soirée qui hantera Paris</div>
+                            <span class="article-rule"></span>
+                            <div class="article-byline">De notre correspondant judiciaire — rue de Jérusalem</div>
+                            <div class="article-text">
+                                <p>Vendredi dernier, à sept heures moins le quart du soir, le diacre Gérard Lacroix
+                                    franchit pour la dernière fois sans escorte le seuil de son église bien-aimée. Il
+                                    avait dit les vêpres avec le recueillement habituel, salué ses paroissiens, confié
+                                    son bréviaire au sacristain. Il était, dit-on, de belle humeur : il avait appris
+                                    dans la journée que son neveu venait d'obtenir son baccalauréat.</p>
+                                <p>Un homme l'attendait dans la rue. De taille ordinaire, vêtu d'une veste de drap gris
+                                    usé, le bras gauche ceint d'un brassard de laine bleue — ce signe que nos lecteurs
+                                    ont appris à reconnaître comme l'insigne des groupes de milice proches du
+                                    républicanisme radical. L'homme se tenait immobile contre le mur d'en face, les
+                                    mains dans les poches, regardant la porte latérale de l'église avec la fixité d'un
+                                    homme qui a pris une décision et n'entend plus revenir en arrière.</p>
+                                <p>Lorsque le diacre posa le pied sur le pavé, suivi du jeune Théodore Mallet, enfant de
+                                    chœur de quatorze ans, l'homme sortit une arme de poing, visa, et fit feu. La balle
+                                    atteignit le diacre à l'épaule gauche. Il s'effondra sans pousser un cri.
+                                    L'agresseur prit immédiatement la fuite en direction de la rue de Rennes et disparut
+                                    dans la foule du marché avant que quiconque pût lui barre la route.</p>
+                                <p>Le jeune Mallet, cloué sur place par la stupeur, fut le premier à se pencher sur le
+                                    diacre. Des passants accoururent en quelques secondes. Le docteur Léon de la Serre,
+                                    dont le cabinet se trouve à deux rues de là, fut prévenu et arriva en moins de dix
+                                    minutes. La blessure, quoique sérieuse et douloureuse, n'engageait pas le pronostic
+                                    vital : la balle avait traversé les chairs sans atteindre l'os.</p>
+                                <p>C'est donc sur un diacre conscient — pâle, souffrant, mais conscient — que le docteur
+                                    Léon de la Serre et les sœurs de l'infirmerie se penchèrent quelques dizaines de
+                                    minutes plus tard. Et c'est à ce moment précis que M. Lacroix, regardant le plafond
+                                    blanchi à la chaux de la salle de soins, prononça, à voix basse mais distinctement,
+                                    les mots que ses soignants ont rapportés dès le lendemain à notre rédaction :</p>
+                                <p><em>« Je ne suis que fils de Dieu — pourquoi cette balle m'a-t-elle atteint ? »</em>
+                                </p>
+                                <p>Ces sept mots ont traversé Paris en quelques heures. Ils ont été recopiés, transmis
+                                    de bouche en bouche, commentés dans les sacristies et les cafés, cités dans au moins
+                                    quatre journaux du matin. Une parole simple, qui n'est ni un reproche à Dieu ni une
+                                    malédiction contre ses agresseurs, mais une interrogation nue — celle d'un homme de
+                                    foi qui ne comprend pas pourquoi le monde dans lequel il croyait vivre a laissé
+                                    entrer en lui cette violence.</p>
+                            </div>
+
+                            <div class="witness-box">
+                                <div class="witness-title">Déposition — Théodore Mallet, 14 ans</div>
+                                <div class="witness-text">« Il nous regardait depuis un moment. J'avais cru que c'était
+                                    un paroissien. Quand il a sorti le pistolet, j'ai pas eu le temps de crier. Il a
+                                    tiré et il est parti en courant. Je l'ai vu, le brassard bleu. Ça, je m'en
+                                    souviendrai toute ma vie. »</div>
+                            </div>
+
+                            <div class="article-text">
+                                <p>L'instruction a été confiée au juge Armand Méril, déjà saisi, rappelons-le, de
+                                    l'affaire du boulevard des Capucines impliquant M. Gambetta. Il est rare qu'un même
+                                    magistrat se trouve aux prises simultanément avec deux affaires de violence liées,
+                                    de près ou de loin, aux tensions politiques du moment. M. Méril a refusé tout
+                                    commentaire à la presse.</p>
+                                <p>Un mandat de recherche est en cours. Le signalement de l'agresseur — trente à
+                                    quarante ans, cheveux sombres, forte moustache, brassard bleu — a été transmis à
+                                    toutes les brigades de la capitale. Aucune arrestation n'avait été réalisée au
+                                    moment où ces lignes étaient écrites.</p>
+                            </div>
+                        </div>
+
+                        <!-- COL 2 -->
+                        <div class="col">
+                            <div class="article-title">Une Parole<br>Qui Traverse Paris</div>
+                            <div class="article-subtitle">Les sept mots du diacre, leur portée, leur écho<br>dans les
+                                milieux catholiques, politiques et populaires</div>
+                            <span class="article-rule"></span>
+                            <div class="article-byline">Chronique — notre rédacteur en chef</div>
+                            <div class="article-text">
+                                <p>Il y a des phrases qui ne demandent pas à être grandes pour l'être. Elles n'ont ni la
+                                    rhétorique des tribuns ni l'éloquence des prédicateurs. Elles naissent d'un homme
+                                    blessé, épuisé, regardant le plafond d'une infirmerie en essayant de comprendre ce
+                                    qui vient de lui arriver. Et elles traversent la ville entière parce qu'elles
+                                    disent, mieux que n'importe quel discours, quelque chose de vrai sur le temps dans
+                                    lequel nous vivons.</p>
+                                <p><em>« Je ne suis que fils de Dieu — pourquoi cette balle m'a-t-elle atteint ? »</em>
+                                </p>
+                                <p>Ces mots n'accusent personne en particulier. Ils n'appellent pas à la vengeance. Ils
+                                    ne se servent pas du sang versé comme d'un argument politique. Ils interrogent,
+                                    simplement. Pourquoi un homme en soutane, sortant de sa propre église après avoir
+                                    dit ses prières, peut-il recevoir une balle dans l'épaule dans les rues d'une ville
+                                    qui se dit la capitale de la civilisation ?</p>
+                                <p>Les réactions ont été nombreuses et diverses. Dans les milieux catholiques, la parole
+                                    du diacre a été perçue comme une sorte de témoignage spirituel, presque évangélique
+                                    : l'homme de Dieu ne se révolte pas, il interroge, comme Job interrogeait Dieu
+                                    depuis son fumier. Plusieurs prêtres ont cité les paroles de M. Lacroix dans leurs
+                                    homélies du samedi.</p>
+                                <p>Dans les milieux républicains modérés, l'embarras a été palpable. La formule « fils
+                                    de Dieu » ne désigne pas, dans la bouche d'un diacre catholique, une prétention à la
+                                    divinité, mais simplement le titre que tout chrétien se reconnaît devant son
+                                    Créateur. Mais certains journaux peu charitables ont tenté d'en faire un sujet de
+                                    dérision, ce qui n'a servi qu'à augmenter l'indignation des lecteurs croyants.</p>
+                                <p>Dans le peuple de Paris — ce peuple que l'on présente parfois comme irréligieux et
+                                    républicain, et qui est souvent les deux à la fois sans que cela lui pose grand
+                                    problème —, la réaction a été plus spontanée : la pitié pour un vieux diacre blessé
+                                    devant un gamin de quatorze ans est une réaction humaine avant d'être une réaction
+                                    politique. Des cierges ont été allumés pour M. Lacroix dans des quartiers qu'on
+                                    n'aurait pas soupçonnés de dévotion particulière.</p>
+                            </div>
+
+                            <div class="pull-quote">
+                                « Un seul coup de feu<br>peut faire plus de mal<br>à une cause que dix<br>discours
+                                adverses. »<br>
+                                <span style="font-size:8.5px;font-style:normal;letter-spacing:.1em;">— Réflexion d'un
+                                    républicain modéré,<br>rapportée par notre correspondant</span>
+                            </div>
+
+                            <div class="article-text">
+                                <p>Ce qui frappe peut-être le plus, en définitive, c'est que ces quelques mots ont
+                                    réussi à toucher des sensibilités très différentes, voire opposées, d'une façon que
+                                    les meilleurs discours préparés n'atteignent jamais. La parole involontaire — celle
+                                    qui sort d'un homme à l'instant où il n'a plus rien à défendre ni à prouver — est
+                                    parfois la plus puissante de toutes.</p>
+                                <p>M. Lacroix lui-même, interrogé le lendemain par notre correspondant à travers la
+                                    porte de sa chambre — les médecins n'autorisant pas encore les visites —, a dit
+                                    sobrement qu'il se remettrait, qu'il avait pardonné son agresseur, et qu'il comptait
+                                    remonter en chaire dès que sa blessure le lui permettrait.</p>
+                            </div>
+
+                            <div class="ornament">— ✦ —</div>
+
+                            <div class="voice-box">
+                                <div class="voice-label">Mgr Darboy — Évêque de Paris</div>
+                                <div class="voice-text">« Il faut prendre avec des pincettes cette affaire. »</div>
+                            </div>
+
+                            <div class="voice-box">
+                                <div class="voice-label">M. Jules Simon — Député républicain</div>
+                                <div class="voice-text">« Ces paroles doivent brûler la conscience de tout homme qui,
+                                    par ses discours inconsidérés, a pu semer dans les esprits l'idée que le clergé
+                                    était un ennemi à abattre. Personne n'a le droit d'être innocent de ce qui se passe
+                                    dans les rues. »</div>
+                            </div>
+                        </div>
+
+                        <!-- COL 3 -->
+                        <div class="col">
+                            <div class="article-title">Qui a Tiré<br>sur le Chanoine ?</div>
+                            <div class="article-subtitle">Ce que l'on sait du coupable présumé —<br>les milices
+                                républicaines face à leurs responsabilités</div>
+                            <span class="article-rule"></span>
+                            <div class="article-byline">Enquête — notre correspondant à la Préfecture</div>
+                            <div class="article-text">
+                                <p>L'instruction ouverte par le juge Méril s'oriente résolument vers les groupes de
+                                    milice républicaine opérant dans les quartiers de la rive gauche. Le brassard bleu
+                                    arboré par l'agresseur est un signe distinctif suffisamment caractéristique pour
+                                    restreindre considérablement le champ des recherches.</p>
+                                <p>La Préfecture de Police a procédé, dès le samedi, à des perquisitions dans deux
+                                    associations connues pour leur affiliation aux mouvements républicains radicaux de
+                                    la rue Monge et de la rue d'Ulm. Ces perquisitions n'ont pas encore livré de
+                                    résultat probant, mais plusieurs membres ont été convoqués pour audition.</p>
+                                <p>Les chefs de ces groupes, interrogés séparément, ont unanimement condamné l'attentat
+                                    et nié toute implication de leur organisation. L'un d'eux, dont nous ne publions pas
+                                    le nom pour ne pas préjuger de l'instruction, a déclaré à notre correspondant : «
+                                    Nous combattons l'obscurantisme par la raison et le vote, pas par le pistolet. Celui
+                                    qui a fait ça agit seul et contre tout ce que nous défendons. »</p>
+                                <p>Cette déclaration est peut-être sincère. Elle est certainement opportune. Le fait
+                                    demeure qu'un homme portant leur insigne a tenté d'ôter la vie à un homme de Dieu,
+                                    et que cette tentative s'inscrit dans un climat de tensions verbales dont les
+                                    milices elles-mêmes ont été partie prenante. Les réunions du quartier Latin ont vu,
+                                    ces dernières semaines, des orateurs appeler à « abattre les derniers bastions de la
+                                    réaction cléricale » avec une métaphore militaire que certains esprits peu nuancés
+                                    ont pu prendre au pied de la lettre.</p>
+                            </div>
+
+                            <div class="impartiality-banner">
+                                <strong>Mise au point de la Rédaction</strong><br>
+                                Nous ne confondons pas un mouvement politique avec le geste d'un homme.<br>
+                                Mais nous affirmons qu'un discours de haine, même enrobé de rhétorique progressiste,<br>
+                                porte une part de responsabilité dans la violence qu'il engendre.
+                            </div>
+
+                            <div class="article-text">
+                                <p>La question des lettres de menace reçues par le diacre dans les semaines précédentes
+                                    ajoute à la gravité de l'affaire. M. Lacroix avait signalé deux courriers anonymes à
+                                    son supérieur ecclésiastique mais n'en avait pas informé les autorités civiles. Ces
+                                    lettres, saisies par le juge Méril, font l'objet d'une analyse graphologique et
+                                    stylistique.</p>
+                                <p>Les prochains jours seront décisifs. Paris attend avec une impatience mêlée
+                                    d'angoisse le résultat d'une instruction qui, quelle qu'en soit l'issue, ne manquera
+                                    pas d'alimenter les passions politiques d'une capitale déjà suffisamment embrasée.
+                                </p>
+                            </div>
+
+                            <div class="ornament">— ✦ —</div>
+
+                            <div class="section-head">État de Santé — Bulletin</div>
+                            <div class="article-text">
+                                <p>Selon le docteur Léon de la Serre, le diacre Lacroix repose convenablement. La
+                                    blessure est propre. La fièvre, légère dans la nuit de vendredi à samedi, est
+                                    retombée. M. Lacroix a pu prendre quelque nourriture le matin et a demandé qu'on lui
+                                    apporte son bréviaire. Les médecins espèrent une reprise d'activités limitées d'ici
+                                    deux semaines. La paroisse Saint-Sulpice assure ses offices en son absence.</p>
+                            </div>
+
+                            <div class="ornament">— ✦ —</div>
+
+                            <div class="section-head">Prières &amp; Solidarité</div>
+                            <div class="article-text">
+                                <p>Des vigiles spontanées ont été organisées vendredi soir et samedi matin devant
+                                    Saint-Sulpice. Des cierges ont été allumés dans plusieurs églises du quartier. Des
+                                    lettres de soutien arrivent à l'infirmerie de l'abbaye depuis toute la France. Une
+                                    collecte est ouverte pour couvrir les frais médicaux du diacre, quoique les sœurs
+                                    affirment que cela n'est point nécessaire.</p>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="content-2col">
+                        <div class="col-left">
+                            <div class="section-head">Éditorial — Ce que ces mots nous demandent</div>
+                            <article class="drop-cap">
+                                <div class="article-text">
+                                    <p>Nous ne nous attendions pas, en fondant ce journal, à avoir un jour à transcrire
+                                        les paroles d'un homme blessé sur son lit d'infirmerie comme si elles étaient le
+                                        résumé d'une époque. Et pourtant, c'est bien ce que font ces quelques mots du
+                                        diacre Lacroix.</p>
+                                    <p><em>« Je ne suis que fils de Dieu — pourquoi cette balle m'a-t-elle atteint ?
+                                            »</em></p>
+                                    <p>Derrière cette question, il y en a une autre, que le diacre ne pose pas mais que
+                                        la phrase porte en elle : comment en sommes-nous arrivés là ? Comment une ville,
+                                        une société, une nation qui se flatte d'être à la tête de la civilisation
+                                        a-t-elle pu produire un homme capable de tirer sur un vieux diacre dans une rue
+                                        tranquille, devant un enfant, sans un mot et sans un remords apparent ?</p>
+                                    <p>La réponse n'est simple pour personne. Elle engage les orateurs qui enflamment
+                                        les foules sans compter les conséquences de leurs métaphores guerrières. Elle
+                                        engage les journaux qui désignent l'adversaire comme un ennemi à vaincre plutôt
+                                        que comme un concitoyen à convaincre. Elle engage les responsables politiques
+                                        qui tolèrent dans leurs rangs des groupes dont la violence verbale prépare,
+                                        lentement mais sûrement, la violence physique.</p>
+                                    <p>Elle nous engage, nous aussi. Car en publiant ces événements, en les racontant,
+                                        en leur donnant la place et la visibilité qu'ils méritent, nous participons à la
+                                        construction du récit de cette époque. Nous essayons de le faire avec honnêteté.
+                                        Nous espérons que cela suffira.</p>
+                                </div>
+                            </article>
+                        </div>
+                        <div class="col-right">
+                            <div class="section-head">Vie de la Rédaction</div>
+                            <div class="article-text">
+                                <p>Le prochain numéro de la <em>Gazette</em> paraîtra lundi prochain dans les conditions
+                                    habituelles. Nous invitons nos lecteurs — qu'ils soient abonnés ou acheteurs au
+                                    numéro — à nous faire parvenir leurs réflexions, témoignages ou informations par
+                                    courrier à notre adresse : 4, Rue de la Paix, Paris. Toute correspondance sera lue
+                                    avec attention.</p>
+                            </div>
+
+                            <div class="ornament">— ✦ —</div>
+
+                            <div class="ad">
+                                <div class="ad-title">Maison Lefèvre — Imprimeur</div>
+                                <div class="ad-text">Impressions en tous genres — Affiches, menus, faire-part<br>14, Rue
+                                    de Seine — Paris VIe</div>
+                            </div>
+
+                            <div class="ad">
+                                <div class="ad-title">Pharmacie Duchamp</div>
+                                <div class="ad-text">Remèdes éprouvés contre les maux de saison<br>Cataplasmes, élixirs
+                                    et pastilles camphrées<br>7, Boulevard Saint-Germain</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="news-footer">
+                        <span>Imprimerie de la Ga&zwnj;zette — 4, Rue de la Paix, Paris</span>
+                        <span class="footer-center">✦ Ga&zwnj;zette de la Serre ✦</span>
+                        <span>Gérant responsable : L.-Ph. de la Serre</span>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- BOUTON RETOUR — BAS -->
+    <a href="../index.html#les-editions" class="btn-back-bottom" id="btn-back-bottom">
+        <span class="arrow">←</span> Retour au kiosque
+    </a>
+
+    <!-- SITE FOOTER -->
+    <footer class="site-footer">
+        <p class="site-footer-ornament">✦</p>
+        <p class="site-footer-text">La Gazette de la Serre — Maison de la Serre — Paris</p>
+        <p class="site-footer-text">Tous droits réservés — MDCCCLXIX</p>
+    </footer>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        // Mobile Menu Toggle
+        const navToggle = document.getElementById('nav-toggle');
+        const navLinks = document.getElementById('nav-links');
+
+        navToggle.addEventListener('click', () => {
+            const open = navLinks.classList.toggle('open');
+            navToggle.setAttribute('aria-expanded', open);
+        });
+
+        navLinks.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('open');
+                navToggle.setAttribute('aria-expanded', 'false');
+            });
+        });
+    </script>
+
+</body>
+
+</html>
