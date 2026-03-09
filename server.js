@@ -646,6 +646,40 @@ app.get('/api/stats', authMiddleware, async (req, res) => {
 });
 
 // ============================================================
+//  ARCHIVES CLANDESTINES
+// ============================================================
+app.post('/api/archives/verify', (req, res) => {
+    try {
+        const { containerId, password } = req.body;
+
+        if (!containerId || !password) {
+            return res.status(400).json({ error: 'Identifiant du conteneur et mot de passe requis' });
+        }
+
+        // Vérification avec la variable d'environnement appropriée (ex: ARCHIVE_PWD_1)
+        const envPassword = process.env[`ARCHIVE_PWD_${containerId}`];
+
+        if (!envPassword) {
+            return res.status(404).json({ error: 'Conteneur non configuré' });
+        }
+
+        if (password === envPassword) {
+            // Mot de passe correct
+            res.json({
+                success: true,
+                content: `<p>Contenu secret du dossier n°${containerId} déverrouillé.</p><p><em>"Seuls ceux qui cherchent la vérité trouvent le chemin."</em></p>`
+            });
+        } else {
+            // Mot de passe incorrect
+            res.status(401).json({ error: 'Mot de passe incorrect' });
+        }
+    } catch (err) {
+        console.error('Archives verify error:', err);
+        res.status(500).json({ error: 'Erreur serveur' });
+    }
+});
+
+// ============================================================
 //  START
 // ============================================================
 

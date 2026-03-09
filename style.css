@@ -160,6 +160,105 @@ body.bg-wall {
     background: var(--gold-dim);
 }
 
+/* ==========================================================
+   SUBSCRIBE BUTTON
+========================================================== */
+.btn-subscribe {
+    font-family: var(--font-body);
+    font-size: .75rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    background: linear-gradient(135deg, var(--red-ink), var(--red-stamp, #7a2222));
+    color: var(--parchment-light);
+    border: 1px solid var(--red-glow);
+    padding: .5rem 1.2rem;
+    cursor: pointer;
+    transition: all var(--transition);
+    margin-left: 0.5rem;
+    box-shadow: 0 4px 15px rgba(138, 48, 48, .3);
+    border-radius: 2px;
+}
+
+.btn-subscribe:hover {
+    background: var(--red-glow);
+    border-color: var(--parchment);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(138, 48, 48, .5);
+}
+
+.btn-subscribe:active {
+    transform: translateY(0);
+}
+
+/* ==========================================================
+   DROPDOWN MENU
+========================================================== */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(180deg, #120903f0, #0e0a04f0);
+    min-width: 200px;
+    box-shadow: 0px 8px 16px var(--shadow);
+    border: 1px solid var(--rule);
+    z-index: 101;
+    padding: 0.5rem 0;
+}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Dropdown link styling */
+.dropdown-link {
+    font-family: var(--font-body);
+    font-size: 0.82rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--parchment-alt);
+    text-decoration: none;
+    padding: 0.8rem 1.5rem;
+    transition: all var(--transition);
+    text-align: center;
+    position: relative;
+}
+
+.dropdown-link:hover,
+.dropdown-link:focus-visible {
+    color: var(--gold-bright);
+    background-color: rgba(139, 114, 50, 0.1);
+}
+
+.dropdown-link::after {
+    content: '';
+    position: absolute;
+    bottom: 4px;
+    left: 50%;
+    width: 0;
+    height: 1px;
+    background: var(--gold-bright);
+    transition: width var(--transition), left var(--transition);
+}
+
+.dropdown-link:hover::after,
+.dropdown-link:focus-visible::after {
+    width: 40%;
+    left: 30%;
+}
+
+.dropdown-link.active {
+    color: var(--gold);
+}
+
 @media(max-width:768px) {
     .navbar {
         padding: 0 1rem;

@@ -42,35 +42,6 @@
         }
 
         /* ==========================================================
-           SUBSCRIBE BUTTON
-        ========================================================== */
-        .btn-subscribe {
-            font-family: var(--font-body);
-            font-size: .75rem;
-            letter-spacing: .12em;
-            text-transform: uppercase;
-            background: linear-gradient(135deg, var(--red-ink), var(--red-stamp));
-            color: var(--parchment-light);
-            border: 1px solid var(--red-glow);
-            padding: .5rem 1.2rem;
-            cursor: pointer;
-            transition: all var(--transition);
-            margin-left: 1rem;
-            box-shadow: 0 4px 15px rgba(138, 48, 48, .3);
-        }
-
-        .btn-subscribe:hover {
-            background: var(--red-glow);
-            border-color: var(--parchment);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(138, 48, 48, .5);
-        }
-
-        .btn-subscribe:active {
-            transform: translateY(0);
-        }
-
-        /* ==========================================================
            HERO SECTION — MANCHETTE
         ========================================================== */
         .hero {
@@ -933,7 +904,7 @@
          NAVBAR
     ============================================================== -->
     <nav class="navbar" id="navbar" role="navigation" aria-label="Navigation principale">
-        <a href="#" class="navbar-logo" id="nav-logo">La Gazette de la Serre</a>
+        <a href="index.html" class="navbar-logo" id="nav-logo">La Gazette de la Serre</a>
 
         <button class="navbar-toggle" id="nav-toggle" aria-label="Ouvrir le menu" aria-expanded="false">
             <span></span>
@@ -942,15 +913,22 @@
         </button>
 
         <ul class="navbar-links" id="nav-links">
-            <li><a href="#hero" class="nav-link active" id="link-accueil">Accueil</a></li>
-            <li><a href="#les-editions" class="nav-link" id="link-editions">Les Éditions</a></li>
-            <li><a href="petites-annonces.html" class="nav-link" id="link-annonces">Annonces</a></li>
-            <li><a href="avis-de-recherche.html" class="nav-link" id="link-avis">Avis de Recherche</a></li>
-            <li><a href="#redaction" class="nav-link" id="link-staff">La Machinerie</a></li>
+            <li><a href="index.html" class="nav-link active" id="link-accueil">Accueil</a></li>
+            <li><a href="editions.html" class="nav-link" id="link-editions">Le Kiosque</a></li>
+            <li><a href="lettres.html" class="nav-link" id="link-ecrire">Nous Écrire</a></li>
+
+            <!-- Menu Déroulant -->
+            <li class="dropdown">
+                <a href="#" class="nav-link" aria-haspopup="true" aria-expanded="false">Rubriques</a>
+                <div class="dropdown-content">
+                    <a href="petites-annonces.html" class="dropdown-link">Petites Annonces</a>
+                    <a href="avis-de-recherche.html" class="dropdown-link">Avis de Recherche</a>
+                    <a href="archives.html" class="dropdown-link">Archives Clandestines</a>
+                    <a href="index.html#redaction" class="dropdown-link">La Machinerie</a>
+                </div>
+            </li>
             <li>
-                <button class="btn-subscribe" id="btn-subscribe" type="button">
-                    <span>S'abonner — 100 Francs</span>
-                </button>
+                <button class="btn-subscribe" id="btn-subscribe" type="button">S'abonner</button>
             </li>
         </ul>
     </nav>
@@ -983,7 +961,7 @@
         </div>
 
         <div class="quick-links">
-            <a href="editions/edition-1.html" class="quick-link" id="ql-derniere">
+            <a href="media/La_Gazette_de_la_Serre_9_Mars_1869.html" class="quick-link" id="ql-derniere">
                 <div class="quick-link-icon">✦</div>
                 <div>
                     <div class="quick-link-label">Dernière Édition</div>
@@ -1034,31 +1012,73 @@
     <section class="section" id="les-editions" aria-label="Les Éditions">
         <div class="section-header">
             <p class="section-label">Nos Publications</p>
-            <h2 class="section-title">Les Éditions</h2>
+            <h2 class="section-title">Dernières Parutions</h2>
             <hr class="section-rule">
         </div>
 
         <div class="editions-grid">
 
-            <!-- ÉDITION N°1 -->
-            <a href="editions/edition-1.html" class="edition-card" id="edition-1" tabindex="0">
-                <div class="edition-card-img">
-                    <img src="page-de-garde.jpg" alt="Page de garde — N° 824, 2 Mars 1869" loading="lazy">
-                    <span class="edition-badge">Nouveau</span>
+            <!-- ÉDITION N°2 - LA GAZETTE DE LA SERRE -->
+            <a href="media/La_Gazette_de_la_Serre_9_Mars_1869.html" class="hero-edition"
+                style="display: flex; flex-direction: column; background: var(--bg-panel); border: 1px solid rgba(196, 160, 64, 0.2); border-radius: 8px; overflow: hidden; margin-bottom: 2rem; text-decoration: none; color: inherit; transition: all var(--transition);">
+                <div class="hero-edition-img"
+                    style="min-height: 250px; background: url('Parution-1.png') center/cover; position: relative;">
+                    <span
+                        style="position: absolute; top: 1rem; left: 1rem; background: var(--bg-dark); border: 1px solid var(--gold); color: var(--gold); padding: 0.3rem 0.8rem; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; z-index: 2;">✦
+                        Nouveau</span>
+                    <div style="position: absolute; inset: 0; background: rgba(0,0,0,0.3);"></div>
                 </div>
-                <div class="edition-card-body">
-                    <h3 class="edition-card-title">La Balle et la Croix</h3>
-                    <p class="edition-card-date">2 Mars 1869 — N° 824</p>
-                    <p class="edition-card-summary">
-                        Le diacre Gérard Lacroix, blessé d'une balle républicaine devant Saint-Sulpice, prononce une
-                        parole qui traverse Paris entier. Enquête, témoignages et éditorial — le premier numéro de
-                        la
-                        Gazette.
+                <div class="hero-edition-content" style="padding: 2rem;">
+                    <p
+                        style="font-size: 0.8rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 0.5rem;">
+                        9 Mars 1869</p>
+                    <h3
+                        style="font-family: var(--font-display); font-size: 2rem; color: var(--parchment-light); margin-bottom: 1rem; line-height: 1.1;">
+                        La Gazette de la Serre</h3>
+                    <p
+                        style="font-size: 0.95rem; color: var(--parchment-dark); line-height: 1.6; margin-bottom: 1.5rem;">
+                        Louis-Philippe de la Serre, nouveau maire de Paris. Les événements récents et les discours
+                        marquants du directeur de notre journal.
                     </p>
-                    <span class="btn-read">Lire l'édition <span class="arrow">→</span></span>
+                    <span
+                        style="display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); border-bottom: 1px solid var(--gold-dim); padding-bottom: 0.2rem;">Lire
+                        l'édition <span class="arrow">→</span></span>
                 </div>
             </a>
 
+            <!-- ÉDITION N°3 - LE MONITEUR PARISIEN -->
+            <a href="media/Le_Moniteur_Parisien_9_Mars_1869.html" class="hero-edition"
+                style="display: flex; flex-direction: column; background: var(--bg-panel); border: 1px solid rgba(196, 160, 64, 0.2); border-radius: 8px; overflow: hidden; margin-bottom: 2rem; text-decoration: none; color: inherit; transition: all var(--transition);">
+                <div class="hero-edition-img"
+                    style="min-height: 250px; background: url('Parution-2.png') center/cover; position: relative;">
+                    <span
+                        style="position: absolute; top: 1rem; left: 1rem; background: var(--bg-dark); border: 1px solid var(--gold); color: var(--gold); padding: 0.3rem 0.8rem; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; z-index: 2;">✦
+                        Nouveau</span>
+                    <div style="position: absolute; inset: 0; background: rgba(0,0,0,0.3);"></div>
+                </div>
+                <div class="hero-edition-content" style="padding: 2rem;">
+                    <p
+                        style="font-size: 0.8rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 0.5rem;">
+                        9 Mars 1869</p>
+                    <h3
+                        style="font-family: var(--font-display); font-size: 2rem; color: var(--parchment-light); margin-bottom: 1rem; line-height: 1.1;">
+                        Le Moniteur Parisien</h3>
+                    <p
+                        style="font-size: 0.95rem; color: var(--parchment-dark); line-height: 1.6; margin-bottom: 1.5rem;">
+                        L'ingénieur et sa traversée de la Manche sous-marine, et l'incident de l'incendie aux Halles au
+                        cœur de la capitale.
+                    </p>
+                    <span
+                        style="display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); border-bottom: 1px solid var(--gold-dim); padding-bottom: 0.2rem;">Lire
+                        l'édition <span class="arrow">→</span></span>
+                </div>
+            </a>
+
+        </div>
+
+        <div style="text-align: center; margin-top: 2rem;">
+            <a href="editions.html" class="hero-cta" style="opacity: 1; animation: none;">Voir toutes les éditions <span
+                    class="arrow">→</span></a>
         </div>
     </section>
 

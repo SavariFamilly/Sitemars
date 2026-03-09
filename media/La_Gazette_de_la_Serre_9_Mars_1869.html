@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>La Gazette de la Serre — 9 Mars 1869</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=IM+Fell+Double+Pica:ital@0;1&family=Cinzel:wght@400;700;900&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --paper: #ede0c0;
+      --paper-dark: #d5c49a;
+      --ink: #160e04;
+      --ink-faded: #3d2b10;
+      --red: #8b1a1a;
+      --blue: #1a2e5a;
+      --rule: #2a1a05;
+      --gold: #8b6914;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #0e0a04;
+      background-image: radial-gradient(ellipse at 40% 30%, #2e1e0a 0%, #0a0602 80%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      padding: 28px 10px;
+      font-family: 'IM Fell English', serif;
+    }
+
+    .newspaper {
+      width: 920px;
+      background: var(--paper);
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='0.07'/%3E%3C/svg%3E");
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5), 0 16px 60px rgba(0, 0, 0, 0.75), inset 0 0 120px rgba(90, 60, 10, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .newspaper::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 15% 8%, rgba(160, 120, 40, 0.14) 0%, transparent 55%),
+        radial-gradient(ellipse at 85% 92%, rgba(110, 70, 15, 0.18) 0%, transparent 45%),
+        radial-gradient(ellipse at 60% 40%, transparent 30%, rgba(70, 45, 8, 0.06) 100%),
+        radial-gradient(circle at 5% 60%, rgba(140, 100, 30, 0.1) 0%, transparent 40%);
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    .page-border-outer {
+      margin: 10px;
+      position: relative;
+      border: none;
+      padding: 6px;
+      box-shadow:
+        inset 0 0 0 3px var(--rule),
+        inset 0 0 0 5px var(--paper),
+        inset 0 0 0 7px var(--rule),
+        inset 0 0 0 9px var(--paper-dark),
+        inset 0 0 0 11px var(--rule);
+    }
+
+    .page-border-outer::before,
+    .page-border-outer::after {
+      content: '✦';
+      position: absolute;
+      font-size: 14px;
+      color: var(--gold);
+      background: var(--paper);
+      padding: 2px 4px;
+      z-index: 5;
+    }
+
+    .page-border-outer::before {
+      top: 3px;
+      left: 3px;
+    }
+
+    .page-border-outer::after {
+      bottom: 3px;
+      right: 3px;
+    }
+
+    .corner-tr,
+    .corner-bl {
+      position: absolute;
+      font-size: 14px;
+      color: var(--gold);
+      background: var(--paper);
+      padding: 2px 4px;
+      z-index: 5;
+      font-family: serif;
+    }
+
+    .corner-tr {
+      top: 3px;
+      right: 3px;
+    }
+
+    .corner-bl {
+      bottom: 3px;
+      left: 3px;
+    }
+
+    .page-border-inner {
+      border: 1px solid var(--rule);
+      margin: 14px;
+      padding: 10px 20px 20px;
+      position: relative;
+    }
+
+    .header {
+      text-align: center;
+      padding: 6px 0 8px;
+    }
+
+    .header-top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 8px;
+      letter-spacing: 0.1em;
+      color: var(--ink-faded);
+      padding: 0 4px 4px;
+      border-bottom: 1px solid var(--rule);
+      margin-bottom: 6px;
+    }
+
+    .header-top-left,
+    .header-top-right {
+      flex: 1;
+      font-family: 'IM Fell English', serif;
+    }
+
+    .header-top-right {
+      text-align: right;
+    }
+
+    .header-motto {
+      flex: 2;
+      text-align: center;
+      font-family: 'IM Fell English', serif;
+      font-style: italic;
+      font-size: 9px;
+      color: var(--ink-faded);
+      border-left: 1px solid var(--rule);
+      border-right: 1px solid var(--rule);
+      padding: 0 10px;
+    }
+
+    .masthead-wrapper {
+      position: relative;
+      margin: 4px 0;
+    }
+
+    .masthead-gazette {
+      font-family: 'IM Fell Double Pica', serif;
+      font-size: 28px;
+      line-height: 1;
+      color: var(--ink-faded);
+      letter-spacing: 8px;
+      text-transform: uppercase;
+      margin-bottom: 2px;
+      display: block;
+      text-align: center;
+    }
+
+    .masthead-dela-serre {
+      font-family: 'IM Fell Double Pica', serif;
+      font-size: 72px;
+      line-height: 0.95;
+      color: var(--ink);
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+      display: block;
+      text-align: center;
+    }
+
+    .masthead-fondateur {
+      font-family: 'IM Fell English', serif;
+      font-size: 13px;
+      color: var(--ink-faded);
+      letter-spacing: 0.18em;
+      margin-bottom: 5px;
+      text-align: center;
+    }
+
+    .masthead-fondateur em {
+      font-style: italic;
+      color: var(--ink);
+    }
+
+    .masthead-sub {
+      font-family: 'IM Fell Double Pica', serif;
+      font-size: 11.5px;
+      letter-spacing: 0.28em;
+      color: var(--ink-faded);
+      text-transform: uppercase;
+      margin-bottom: 6px;
+      text-align: center;
+    }
+
+    .masthead-tagline {
+      font-family: 'IM Fell English', serif;
+      font-style: italic;
+      font-size: 13px;
+      color: var(--ink);
+      border-top: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+      padding: 3px 0;
+      margin: 0 40px;
+      letter-spacing: 0.1em;
+      text-align: center;
+    }
+
+    .header-info-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 6px;
+      padding-top: 4px;
+      border-top: 1px solid var(--rule);
+      font-size: 8.5px;
+      color: var(--ink-faded);
+      letter-spacing: 0.08em;
+      font-family: 'IM Fell English', serif;
+    }
+
+    .price-box {
+      border: 1px double var(--rule);
+      padding: 3px 12px;
+      font-size: 8.5px;
+      letter-spacing: 0.15em;
+      background: rgba(42, 26, 5, 0.04);
+    }
+
+    .lead-section {
+      border-top: 4px double var(--rule);
+      border-bottom: 2px solid var(--rule);
+      padding: 10px 0 8px;
+      margin: 8px 0;
+      text-align: center;
+    }
+
+    .lead-kicker {
+      font-size: 9px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--red);
+      font-family: 'IM Fell English', serif;
+      margin-bottom: 4px;
+    }
+
+    .lead-title {
+      font-family: 'IM Fell Double Pica', serif;
+      font-size: 34px;
+      line-height: 1.08;
+      color: var(--ink);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 4px;
+    }
+
+    .lead-subtitle {
+      font-family: 'IM Fell English', serif;
+      font-style: italic;
+      font-size: 14px;
+      color: var(--ink-faded);
+      margin-bottom: 6px;
+    }
+
+    .lead-rule {
+      width: 60%;
+      margin: 4px auto;
+      border: none;
+      border-top: 1px solid var(--rule);
+    }
+
+    .lead-summary {
+      font-family: 'IM Fell English', serif;
+      font-size: 11px;
+      line-height: 1.7;
+      color: var(--ink);
+      max-width: 680px;
+      margin: 6px auto 0;
+      text-align: center;
+    }
+
+    .content-3col {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 0;
+      margin-top: 10px;
+    }
+
+    .content-2col {
+      display: grid;
+      grid-template-columns: 3fr 2fr;
+      gap: 0;
+      border-top: 2px solid var(--rule);
+      margin-top: 12px;
+    }
+
+    .col {
+      padding: 0 14px;
+      border-right: 1px solid var(--rule);
+    }
+
+    .col:last-child {
+      border-right: none;
+      padding-right: 0;
+    }
+
+    .col:first-child {
+      padding-left: 0;
+    }
+
+    .col-left {
+      padding: 8px 14px 0 0;
+      border-right: 1px solid var(--rule);
+    }
+
+    .col-right {
+      padding: 8px 0 0 14px;
+    }
+
+    article {
+      margin-bottom: 14px;
+    }
+
+    .article-title {
+      font-family: 'IM Fell Double Pica', serif;
+      font-size: 17px;
+      line-height: 1.2;
+      color: var(--ink);
+      text-align: center;
+      margin-bottom: 3px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .article-subtitle {
+      font-family: 'IM Fell English', serif;
+      font-style: italic;
+      font-size: 10.5px;
+      color: var(--ink-faded);
+      text-align: center;
+      margin-bottom: 5px;
+      line-height: 1.4;
+    }
+
+    .article-rule {
+      width: 45%;
+      margin: 4px auto 5px;
+      border: none;
+      border-top: 1px solid var(--rule);
+      display: block;
+    }
+
+    .article-byline {
+      font-size: 8px;
+      text-align: center;
+      color: var(--ink-faded);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+      font-family: 'IM Fell English', serif;
+    }
+
+    .article-text {
+      font-family: 'IM Fell English', serif;
+      font-size: 10px;
+      line-height: 1.72;
+      color: var(--ink);
+      text-align: justify;
+      hyphens: auto;
+    }
+
+    .article-text p {
+      text-indent: 1.2em;
+      margin-bottom: 3px;
+    }
+
+    .article-text p:first-child {
+      text-indent: 0;
+    }
+
+    .drop-cap p:first-child::first-letter {
+      font-family: 'IM Fell Double Pica', serif;
+      font-size: 40px;
+      float: left;
+      line-height: 0.78;
+      margin: 3px 5px 0 0;
+      color: var(--ink);
+    }
+
+    .section-head {
+      font-family: 'IM Fell Double Pica', serif;
+      font-size: 12px;
+      text-align: center;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ink);
+      border-top: 2px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+      padding: 3px 0;
+      margin: 10px 0 8px;
+    }
+
+    .impartiality-banner {
+      background: var(--ink);
+      color: var(--paper);
+      text-align: center;
+      padding: 6px 12px;
+      margin: 6px 0;
+      border-top: 2px solid var(--gold);
+      border-bottom: 2px solid var(--gold);
+      font-family: 'IM Fell English', serif;
+      font-style: italic;
+      font-size: 10.5px;
+      letter-spacing: 0.08em;
+      line-height: 1.5;
+    }
+
+    .impartiality-banner strong {
+      font-style: normal;
+      font-size: 12px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    .pull-quote {
+      border-top: 2px solid var(--rule);
+      border-bottom: 2px solid var(--rule);
+      padding: 7px 12px;
+      margin: 8px 0;
+      font-family: 'IM Fell Double Pica', serif;
+      font-style: italic;
+      font-size: 11.5px;
+      text-align: center;
+      line-height: 1.45;
+      color: var(--ink);
+    }
+
+    .voice-box {
+      border: 1px solid var(--rule);
+      padding: 7px 9px;
+      margin: 6px 0;
+    }
+
+    .voice-label {
+      font-family: 'IM Fell Double Pica', serif;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      margin-bottom: 4px;
+      color: var(--red);
+    }
+
+    .voice-text {
+      font-family: 'IM Fell English', serif;
+      font-style: italic;
+      font-size: 9.5px;
+      line-height: 1.55;
+      color: var(--ink-faded);
+    }
+
+    .ornament {
+      text-align: center;
+      font-size: 12px;
+      color: var(--ink-faded);
+      margin: 7px 0;
+      letter-spacing: 5px;
+    }
+
+    .ad {
+      border: 1px solid var(--ink-faded);
+      padding: 7px 9px;
+      margin: 6px 0;
+      text-align: center;
+      background: rgba(0, 0, 0, 0.025);
+    }
+
+    .ad-title {
+      font-family: 'IM Fell Double Pica', serif;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 3px;
+    }
+
+    .ad-text {
+      font-family: 'IM Fell English', serif;
+      font-size: 9px;
+      line-height: 1.55;
+      color: var(--ink-faded);
+    }
+
+    .footer {
+      border-top: 2px double var(--rule);
+      padding: 5px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 7.5px;
+      letter-spacing: 0.1em;
+      color: var(--ink-faded);
+      font-family: 'IM Fell English', serif;
+      margin-top: 10px;
+    }
+
+    .footer-center {
+      text-align: center;
+      flex: 1;
+    }
+
+    .navbar {
+      width: 100%;
+      max-width: 920px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 0 15px 0;
+      margin-bottom: 20px;
+      border-bottom: 1px solid rgba(196, 160, 64, 0.3);
+    }
+
+    .navbar-logo {
+      font-family: 'Cinzel', serif;
+      font-size: 1.2rem;
+      color: #c4a040;
+      text-decoration: none;
+      letter-spacing: 0.15em;
+    }
+
+    .navbar-links {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+    }
+
+    .nav-link {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.9rem;
+      color: #ede0c0;
+      text-decoration: none;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: color 0.3s;
+    }
+
+    .nav-link:hover {
+      color: #c4a040;
+    }
+
+    .btn-back-top {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.85rem;
+      color: #c4a040;
+      text-decoration: none;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.4rem 1rem;
+      border: 1px solid rgba(196, 160, 64, 0.4);
+      border-radius: 4px;
+      transition: all 0.3s;
+      margin-bottom: 20px;
+      align-self: flex-start;
+      align-self: center;
+      width: 100%;
+      max-width: 920px;
+      box-sizing: border-box;
+      justify-content: center;
+    }
+
+    .btn-back-top:hover {
+      background: rgba(196, 160, 64, 0.1);
+      border-color: #c4a040;
+    }
+
+    .btn-back-bottom {
+      display: block;
+      width: fit-content;
+      margin: 40px auto 10px;
+      font-family: 'Playfair Display', serif;
+      font-size: 0.85rem;
+      color: #ede0c0;
+      text-decoration: none;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.6rem 2rem;
+      border: 1px solid rgba(196, 160, 64, 0.4);
+      background: transparent;
+      transition: all 0.3s ease;
+      text-align: center;
+    }
+
+    .btn-back-bottom:hover {
+      background: rgba(196, 160, 64, 0.1);
+      color: #c4a040;
+      border-color: #c4a040;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar" id="navbar" role="navigation" aria-label="Navigation principale">
+    <a href="../index.html" class="navbar-logo" id="nav-logo">La Gazette de la Serre</a>
+
+    <button class="navbar-toggle" id="nav-toggle" aria-label="Ouvrir le menu" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <ul class="navbar-links" id="nav-links">
+      <li><a href="../index.html" class="nav-link" id="link-accueil">Accueil</a></li>
+      <li><a href="../editions.html" class="nav-link active" id="link-editions">Le Kiosque</a></li>
+      <li><a href="../lettres.html" class="nav-link" id="link-ecrire">Nous Écrire</a></li>
+
+      <!-- Menu Déroulant -->
+      <li class="dropdown">
+        <a href="#" class="nav-link" aria-haspopup="true" aria-expanded="false">Rubriques</a>
+        <div class="dropdown-content">
+          <a href="../petites-annonces.html" class="dropdown-link">Petites Annonces</a>
+          <a href="../avis-de-recherche.html" class="dropdown-link">Avis de Recherche</a>
+          <a href="../archives.html" class="dropdown-link">Archives Clandestines</a>
+          <a href="../index.html#redaction" class="dropdown-link">La Machinerie</a>
+        </div>
+      </li>
+      <li>
+        <button class="btn-subscribe" id="btn-subscribe" type="button"
+          onclick="window.location.href='../index.html'">S'abonner</button>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- BOUTON RETOUR — HAUT -->
+  <a href="../editions.html" class="btn-back" id="btn-back-top">
+    <span class="arrow">←</span> Retour au kiosque
+  </a>
+
+  <div class="newspaper">
+    <div class="page-border-outer">
+      <div class="corner-tr">✦</div>
+      <div class="corner-bl">✦</div>
+      <div class="page-border-inner">
+
+        <!-- EN-TÊTE -->
+        <div class="header">
+          <div class="header-top-bar">
+            <span class="header-top-left">N° 184 — Seizième année de publication</span>
+            <span class="header-motto">« La Vérité sans passion, la Justice sans parti »</span>
+            <span class="header-top-right">Prix : 5 centimes — Abonnement reçu en bureau</span>
+          </div>
+
+          <div class="masthead-wrapper">
+            <span class="masthead-gazette">La Gazette</span>
+            <span class="masthead-dela-serre">de la Serre</span>
+          </div>
+          <div class="masthead-fondateur">Fondée en 1853 par <em>Édouard-Henri de la Serre</em></div>
+          <div class="masthead-sub">Journal Politique, Littéraire &amp; Commercial — Paris</div>
+          <div class="masthead-tagline">Paraissant chaque mardi et vendredi — Rédaction &amp; Administration : 7, Rue
+            des Martyrs, Paris IX<sup>e</sup></div>
+
+          <div class="header-info-bar">
+            <span>Mardi 9 Mars 1869</span>
+            <div class="price-box">ABONNEMENT ANNUEL : 16 FRANCS</div>
+            <span>N° 184 — Dépôt légal effectué</span>
+          </div>
+        </div>
+
+        <div class="impartiality-banner">
+          <strong>Engagement de ce journal</strong><br>
+          La Gazette de la Serre s'engage à donner la parole à toutes les opinions dans la mesure où elles s'expriment
+          avec courtoisie et bonne foi.
+          Elle ne reçoit ni subvention gouvernementale ni financement de parti.
+        </div>
+
+        <!-- UNE -->
+        <div class="lead-section">
+          <div class="lead-kicker">⸻ Nomination Officielle ⸻</div>
+          <div class="lead-title">Louis-Philippe de la Serre<br>nommé Maire de Paris</div>
+          <div class="lead-subtitle">Sa Majesté l'Empereur signe le décret hier soir — Acclamations place de
+            l'Hôtel-de-Ville — Un homme de consensus à la tête de la capitale</div>
+          <hr class="lead-rule">
+          <div class="lead-summary">
+            Par décret impérial signé en soirée du 8 mars 1869, Sa Majesté Napoléon III a nommé M. Louis-Philippe de la
+            Serre, conseiller municipal du IXe arrondissement et ancien sous-préfet de l'Oise, au poste de Maire de
+            Paris. Cette nomination, attendue depuis plusieurs semaines dans les milieux administratifs, met fin à une
+            vacance prolongée à la tête de la première ville de France. La nouvelle a été accueillie avec des
+            applaudissements nourris par les personnes rassemblées place de l'Hôtel-de-Ville dans la fraîcheur du soir.
+          </div>
+        </div>
+
+        <!-- 3 COLONNES -->
+        <div class="content-3col">
+
+          <div class="col drop-cap">
+            <div class="article-title">Le nouveau Maire</div>
+            <div class="article-subtitle">Portrait d'un homme de l'ordre et du progrès</div>
+            <hr class="article-rule">
+            <div class="article-byline">De notre correspondant municipal</div>
+            <div class="article-text">
+              <p>Louis-Philippe de la Serre est né à Lyon en 1822 d'une famille de magistrats. Son père, le président de
+                la Serre, avait servi sous la Monarchie de Juillet avant de se rallier sans éclat au Second Empire. Le
+                fils fit ses études à l'École de droit de Paris, puis entra dans l'administration préfectorale où il
+                gravit rapidement les échelons, sans jamais se faire remarquer par des éclats d'indépendance
+                susceptibles de déplaire aux ministres successifs.</p>
+              <p>Sous-préfet de Senlis en 1852, de Compiègne en 1855, il fut appelé à Paris en 1861 comme adjoint au
+                préfet de la Seine, fonction qu'il exerça sous la direction du baron Haussmann avec une discrétion et
+                une efficacité que ce dernier reconnut publiquement dans ses rapports au Conseil d'État. On lui doit
+                notamment la supervision des travaux de percement du boulevard de Magenta et plusieurs arrêtés sur la
+                salubrité des immeubles du quartier du Temple.</p>
+              <p>Élu conseiller municipal du IXe arrondissement en 1865, M. de la Serre s'est distingué par des
+                interventions mesurées mais précises sur les questions de voirie et d'instruction publique. Il est connu
+                pour sa capacité à écouter des interlocuteurs aux opinions fort diverses sans jamais se laisser
+                entraîner dans des controverses stériles.</p>
+            </div>
+
+            <div class="pull-quote">« M. de la Serre est l'homme qu'il faut à l'heure qu'il est : ni réactionnaire, ni
+              démagogue, mais administrateur. »<br><em style="font-size:9px;">— Le Journal des Débats, 9 mars 1869</em>
+            </div>
+
+            <div class="article-text">
+              <p>Sa femme, née Hortense Gréville, est la sœur du romancier Henri Gréville. On lui prête des sympathies
+                libérales, mais M. de la Serre a toujours veillé à ne pas laisser paraître ses convictions personnelles
+                dans l'exercice de ses fonctions. C'est sans doute ce qui a déterminé le choix de l'Empereur.</p>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="article-title">La Cérémonie d'hier soir</div>
+            <div class="article-subtitle">Le décret lu en présence des conseillers municipaux réunis en séance
+              extraordinaire</div>
+            <hr class="article-rule">
+            <div class="article-byline">Compte rendu de notre envoyé à l'Hôtel-de-Ville</div>
+            <div class="article-text">
+              <p>C'est à dix-neuf heures précises que le préfet de la Seine, M. Eugène Haussmann, a réuni le Conseil
+                municipal en séance extraordinaire pour donner lecture du décret impérial. La salle des délibérations,
+                illuminée pour la circonstance, avait attiré non seulement les conseillers mais aussi plusieurs membres
+                du corps diplomatique et de nombreuses personnalités du monde de la finance et de la presse.</p>
+              <p>Après la lecture du décret par le secrétaire général de la Préfecture, M. Haussmann a pris la parole
+                pour présenter le nouveau maire. Il a salué en M. de la Serre « un administrateur dont la sagesse et le
+                dévouement à l'intérêt public sont au-dessus de tout éloge », formule dont la politesse convenue ne
+                dissimulait pas entièrement une certaine froideur entre les deux hommes, dont les relations ont été,
+                dit-on, difficiles par le passé.</p>
+              <p>M. de la Serre a ensuite prononcé un discours d'une vingtaine de minutes dans lequel il a défini les
+                grandes lignes de son action. Il a parlé de « la nécessité de continuer l'œuvre de transformation de
+                Paris engagée sous la direction éclairée de l'Empereur », de « l'attention constante due aux conditions
+                de vie des populations les plus modestes », et de « l'importance d'une administration municipale qui
+                soit à l'écoute de toutes les parties de la ville ».</p>
+            </div>
+
+            <div class="voice-box">
+              <div class="voice-label">Réaction des rues</div>
+              <div class="voice-text">« Je ne sais pas qui il est, mais si l'Empereur l'a choisi, c'est qu'il en vaut la
+                peine. Pourvu seulement qu'il s'occupe du prix du pain et non pas seulement des boulevards. » — Un
+                boulanger de la rue Saint-Denis, interrogé ce matin.</div>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="article-title">Les Dossiers Urgents</div>
+            <div class="article-subtitle">Ce qui attend le nouveau maire dès sa prise de fonction</div>
+            <hr class="article-rule">
+            <div class="article-byline">Par notre chroniqueur municipal</div>
+            <div class="article-text">
+              <p>La tâche qui attend M. de la Serre est considérable. Paris, en pleine transformation, est une ville
+                dont les contradictions s'aggravent à mesure que sa splendeur s'affirme. Si le centre de la capitale
+                éblouit les visiteurs étrangers par ses nouveaux boulevards et ses immeubles haussmanniens, les
+                faubourgs de la rive droite — Belleville, Ménilmontant, la Villette — abritent des populations dont les
+                conditions de vie n'ont guère changé depuis le début du règne.</p>
+              <p>La question du logement ouvrier est la plus pressante. Les démolitions nécessaires à la percée des
+                grands axes ont chassé vers les périphéries des milliers de familles modestes qui y vivaient entassées
+                dans des conditions déplorables. Les loyers des nouveaux immeubles leur sont inaccessibles. M. de la
+                Serre devra trouver une réponse à cette question ou s'exposer à des troubles croissants dans des
+                quartiers déjà agités.</p>
+              <p>Le dossier de l'instruction primaire est également sur son bureau : des dizaines d'écoles manquent dans
+                les arrondissements récemment rattachés à Paris. M. de la Serre a la réputation de s'intéresser
+                sincèrement à cette question.</p>
+            </div>
+
+            <div class="ornament">— ✦ —</div>
+
+            <div class="section-head">Opinions</div>
+            <div class="article-text">
+              <p><em>Le Figaro</em> salue « un choix qui témoigne du bon sens habituel de Sa Majesté ». <em>La
+                  Liberté</em> est plus réservée : elle eût préféré un maire élu. <em>L'Univers</em> note avec
+                satisfaction que M. de la Serre est un catholique pratiquant. <em>Le Siècle</em>, enfin, rappelle que
+                Paris mérite un vrai gouvernement municipal indépendant, non un fonctionnaire nommé par le pouvoir.</p>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- BAS DE PAGE 2 COLONNES -->
+        <div class="content-2col">
+          <div class="col-left">
+            <div class="section-head">Paris & la Politique</div>
+            <article class="drop-cap">
+              <div class="article-title" style="font-size:15px;">La nomination et les élections à venir</div>
+              <div class="article-byline">Analyse de notre rédacteur politique</div>
+              <div class="article-text">
+                <p>Il serait naïf de ne pas voir dans le choix du moment un calcul politique. Les élections législatives
+                  approchent ; l'opposition libérale et républicaine est en voie de réorganisation ; Paris, ville
+                  frondeuse par nature, sera un enjeu décisif du scrutin. En nommant un maire présentable, modéré dans
+                  ses manières et dans son langage, l'Empereur cherche à donner de sa capitale une image d'ordre
+                  tranquille propre à rassurer les bourgeois indécis.</p>
+                <p>Cette stratégie peut réussir. Elle peut aussi échouer si le nouveau maire ne donne pas rapidement des
+                  gages aux Parisiens sur les questions qui les touchent au quotidien. La mémoire de la ville est
+                  longue. Les barricades de juin 1848 ne sont pas si loin. Et les ouvriers que les grands travaux ont
+                  repoussés dans les faubourgs n'ont pas oublié qu'on les a déplacés sans les consulter.</p>
+                <p>M. de la Serre a la réputation d'un homme à l'écoute. Il lui appartient maintenant de le prouver par
+                  des actes. Paris lui en sera reconnaissant ou lui en tiendra grief selon la mesure dans laquelle il
+                  aura su répondre aux attentes de toutes ses populations, et non seulement de celles qui habitent les
+                  beaux quartiers.</p>
+                <p>Ce journal, qui ne soutient aucun parti, n'a qu'un souhait : que le nouveau maire serve Paris avec
+                  l'impartialité que sa fonction exige et que l'intérêt général commande.</p>
+              </div>
+            </article>
+          </div>
+
+          <div class="col-right">
+            <div class="section-head">Annonces &amp; Avis Divers</div>
+
+            <div class="ad">
+              <div class="ad-title">Maison Pellerin &amp; Dumont</div>
+              <div class="ad-text">Drapiers — Rue de Rivoli, 42<br>Draps fins pour livrées, uniformes &amp;
+                cérémonies<br><em>Fournisseurs de la Maison de la Ville de Paris</em><br>Nouveau catalogue sur demande
+              </div>
+            </div>
+
+            <div class="ad">
+              <div class="ad-title">Café de la Préfecture</div>
+              <div class="ad-text">Place du Châtelet — Ouvert de 7h à minuit<br>Journaux du matin à disposition —
+                Billard — Lecture<br><em>Rendez-vous des gens bien informés</em></div>
+            </div>
+
+            <div class="ornament">— ✦ —</div>
+
+            <article>
+              <div class="article-title" style="font-size:13px;">Avis aux Lecteurs</div>
+              <div class="article-text">
+                <p>La <em>Gazette de la Serre</em> rappelle à ses abonnés que le renouvellement des abonnements annuels
+                  est ouvert jusqu'au 31 mars. Les personnes désireuses de recevoir le journal en province sont invitées
+                  à faire parvenir leur versement par mandat postal à notre bureau de la rue des Martyrs.</p>
+                <p>Nous accueillons toujours avec plaisir les lettres de nos lecteurs sur la nomination du nouveau
+                  maire, que leurs opinions soient favorables ou réservées. Elles paraîtront dans notre prochain numéro
+                  du vendredi 12 mars.</p>
+              </div>
+            </article>
+
+            <div class="ornament">— ✦ —</div>
+
+            <div class="section-head" style="margin-top:8px;">Bref du Monde</div>
+
+            <div class="ad">
+              <div class="ad-title">Espagne</div>
+              <div class="ad-text">La reine Isabelle II, dont le trône est ébranlé depuis les troubles de l'automne
+                dernier, multiplie les concessions libérales sans parvenir à rasséréner ses sujets. Madrid attend.
+                L'Europe regarde.</div>
+            </div>
+
+            <div class="ad">
+              <div class="ad-title">Italie</div>
+              <div class="ad-text">Le jeune Royaume d'Italie réclame Rome avec une insistance croissante. Les troupes
+                françaises qui y maintiennent l'autorité temporelle du Pape sont de plus en plus mal vues à Turin. La
+                question reste sans solution.</div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- PIED DE PAGE -->
+        <div class="footer">
+          <span>IMPRIMERIE LEDOUX — 13, RUE DES ÉCOLES — PARIS V<sup>e</sup></span>
+          <span class="footer-center">✦ La Vérité avant tout ✦</span>
+          <span>Reproduction autorisée avec mention de la source</span>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- BOUTON RETOUR — BAS -->
+  <a href="../editions.html" class="btn-back" id="btn-back-bottom" style="margin-top:2rem;">
+    <span class="arrow">←</span> Retour au kiosque
+  </a>
+
+</body>
+
+</html>

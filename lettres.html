@@ -198,13 +198,34 @@
 </head>
 
 <body class="bg-main">
-    <nav class="navbar">
-        <a href="index.html" class="navbar-logo">La Gazette de la Serre</a>
-        <ul class="navbar-links">
-            <li><a href="index.html" class="nav-link">Accueil</a></li>
-            <li><a href="petites-annonces.html" class="nav-link">Annonces</a></li>
-            <li><a href="avis-de-recherche.html" class="nav-link">Avis de Recherche</a></li>
-            <li><a href="lettres.html" class="nav-link active">Écrire à la Rédaction</a></li>
+    <nav class="navbar" id="navbar" role="navigation" aria-label="Navigation principale">
+        <a href="index.html" class="navbar-logo" id="nav-logo">La Gazette de la Serre</a>
+
+        <button class="navbar-toggle" id="nav-toggle" aria-label="Ouvrir le menu" aria-expanded="false">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <ul class="navbar-links" id="nav-links">
+            <li><a href="index.html" class="nav-link" id="link-accueil">Accueil</a></li>
+            <li><a href="editions.html" class="nav-link" id="link-editions">Le Kiosque</a></li>
+            <li><a href="lettres.html" class="nav-link active" id="link-ecrire">Nous Écrire</a></li>
+
+            <!-- Menu Déroulant -->
+            <li class="dropdown">
+                <a href="#" class="nav-link active" aria-haspopup="true" aria-expanded="false">Rubriques</a>
+                <div class="dropdown-content">
+                    <a href="petites-annonces.html" class="dropdown-link">Petites Annonces</a>
+                    <a href="avis-de-recherche.html" class="dropdown-link">Avis de Recherche</a>
+                    <a href="archives.html" class="dropdown-link">Archives Clandestines</a>
+                    <a href="index.html#redaction" class="dropdown-link">La Machinerie</a>
+                </div>
+            </li>
+            <li>
+                <button class="btn-subscribe" id="btn-subscribe" type="button"
+                    onclick="window.location.href='index.html'">S'abonner</button>
+            </li>
         </ul>
     </nav>
 
@@ -231,7 +252,7 @@
                         <option value="">— Sans affiliation —</option>
                         <option value="Catholiques">Catholiques</option>
                         <option value="Royalistes">Royalistes</option>
-                        <option value="Anarchistes">Anarchistes</option>
+                        <option value="Bonapartistes">Bonapartistes</option>
                         <option value="Républicains">Républicains</option>
                         <option value="Bourgeoisie">Bourgeoisie</option>
                         <option value="Peuple">Le Peuple</option>
