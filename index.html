@@ -454,6 +454,46 @@
             text-transform: none;
         }
 
+        .quick-link.featured {
+            grid-column: 1 / -1;
+            background: linear-gradient(135deg, rgba(20, 15, 10, 0.9), rgba(10, 5, 0, 0.9));
+            border-color: rgba(184, 148, 46, 0.4);
+            justify-content: center;
+            text-align: center;
+            flex-direction: column;
+            padding: 2.5rem;
+            gap: 0.8rem;
+        }
+
+        .quick-link.featured:hover {
+            border-color: var(--gold);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, .5), inset 0 0 20px rgba(184, 148, 46, 0.1);
+        }
+
+        .quick-link.featured .quick-link-icon {
+            font-size: 2.5rem;
+            width: 70px;
+            height: 70px;
+            margin: 0 auto;
+            border-color: var(--gold-dim);
+            color: var(--gold);
+        }
+
+        .quick-link.featured .quick-link-label {
+            font-size: 1.2rem;
+            color: var(--parchment-light);
+            letter-spacing: .15em;
+            margin-top: 0.5rem;
+        }
+
+        .quick-link.featured .quick-link-sub {
+            font-size: 0.85rem;
+            color: var(--gold-dim);
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
         /* ==========================================================
            SECTION ÉDITIONS — GRILLE DE CARTES-JOURNAL
         ========================================================== */
@@ -961,7 +1001,7 @@
         </div>
 
         <div class="quick-links">
-            <a href="media/La_Gazette_de_la_Serre_9_Mars_1869.html" class="quick-link" id="ql-derniere">
+            <a href="editions.html" class="quick-link" id="ql-derniere">
                 <div class="quick-link-icon">✦</div>
                 <div>
                     <div class="quick-link-label">Dernière Édition</div>
@@ -989,18 +1029,12 @@
                     <div class="quick-link-sub">Adressez une lettre à nos rédacteurs</div>
                 </div>
             </a>
-            <a href="#" class="quick-link" id="ql-archives" aria-label="Archives Clandestines">
+            <a href="archives.html" class="quick-link featured" id="ql-archives" aria-label="Archives Clandestines">
                 <div class="quick-link-icon">⚿</div>
                 <div>
                     <div class="quick-link-label" id="archives">Archives Clandestines</div>
-                    <div class="quick-link-sub">Documents confidentiels et enquêtes secrètes</div>
-                </div>
-            </a>
-            <a href="#redaction" class="quick-link" id="ql-machinerie">
-                <div class="quick-link-icon">⚙</div>
-                <div>
-                    <div class="quick-link-label">La Machinerie</div>
-                    <div class="quick-link-sub">L'équipe qui fait tourner les presses</div>
+                    <div class="quick-link-sub">Accédez aux dossiers confidentiels et correspondances secrètes, réservés
+                        aux initiés de la capitale.</div>
                 </div>
             </a>
         </div>
